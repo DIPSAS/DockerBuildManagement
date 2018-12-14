@@ -1,0 +1,58 @@
+changelog:
+    file: CHANGELOG.md
+    envKey: VERSION
+
+run:
+    selections:
+        firstSelection:
+            directory: src
+            abortOnContainerExit: true
+            detached: false
+            files:
+                - docker-compose.proxy.yml
+                - docker-compose.proxy.2.yml
+        secondSelection:
+            directory: src
+            abortOnContainerExit: false
+            detached: false
+            files:
+                - docker-compose.proxy.yml
+
+build:
+    selections:
+        firstSelection:
+            directory: src
+            files:
+                - docker-compose.proxy.yml
+
+test:
+    selections:
+        firstSelection:
+            directory: src
+            removeContainers: true
+            containerNames:
+                - ssl-proxy-web-c-name
+            files:
+                - docker-compose.proxy.yml
+
+publish:
+    selections:
+        firstSelection:
+            directory: src
+            additionalTag: latest
+            files:
+                - docker-compose.proxy.yml
+        secondSelection:
+            directory: src
+            containerArtifact: false
+            files:
+                - docker-compose.proxy.yml
+
+swarm:
+    selections:
+        firstSelection:
+            directory: src
+            properties:
+                - some-property
+            files:
+                - swarm-management.yml

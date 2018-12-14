@@ -1,0 +1,5 @@
+version: '3.3'
+
+services:
+    ssl-proxy-2-web:
+        image: nginx:latest
