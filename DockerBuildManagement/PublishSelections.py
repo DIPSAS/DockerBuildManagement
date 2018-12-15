@@ -24,27 +24,29 @@ def GetPublishSelections(arguments):
 def PublishSelections(selectionsToPublish, publishSelections):
     if len(selectionsToPublish) == 0:
         for publishSelection in publishSelections:
-            PublishSelection(publishSelections[publishSelection])
+            PublishSelection(publishSelections[publishSelection], publishSelection)
     else:
         for selectionToPublish in selectionsToPublish:
             if selectionToPublish in publishSelections:
-                PublishSelection(publishSelections[selectionToPublish])
+                PublishSelection(publishSelections[selectionToPublish], selectionToPublish)
 
 
-def PublishSelection(publishSelection):
+def PublishSelection(publishSelection, publishSelectionKey):
     cwd = BuildTools.TryChangeToDirectoryAndGetCwd(publishSelection)
     if BuildTools.TryGetFromDictionary(publishSelection, CONTAINER_ARTIFACT_KEY, True):
-        PublishContainerSelection(publishSelection)
+        PublishContainerSelection(publishSelection, publishSelectionKey)
     else:
         PublishArtifactSelection(publishSelection)
     os.chdir(cwd)
 
 
-def PublishContainerSelection(publishSelection):
-    for composeFile in publishSelection[BuildTools.FILES_KEY]:
-        DockerComposeTools.PublishDockerImages(composeFile)
-        if ADDITIONAL_TAG_KEY in publishSelection:
-            DockerComposeTools.PublishDockerImagesWithNewTag(composeFile, publishSelection[ADDITIONAL_TAG_KEY])
+def PublishContainerSelection(publishSelection, publishSelectionKey):
+    composeFiles = publishSelection[BuildTools.FILES_KEY]
+    publishComposeFile = 'docker-compose.publish.' + publishSelectionKey + '.yml'
+    DockerComposeTools.MergeComposeFiles(composeFiles, publishComposeFile)
+    DockerComposeTools.PublishDockerImages(publishComposeFile)
+    if ADDITIONAL_TAG_KEY in publishSelection:
+        DockerComposeTools.PublishDockerImagesWithNewTag(publishComposeFile, publishSelection[ADDITIONAL_TAG_KEY])
 
 
 def PublishArtifactSelection(publishSelection):
