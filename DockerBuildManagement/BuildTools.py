@@ -4,6 +4,7 @@ import os
 SELECTIONS_KEY = 'selections'
 FILES_KEY = 'files'
 DIRECTORY_KEY = 'directory'
+ADDITIONAL_TAG_KEY = 'additionalTag'
 
 def GetInfoMsg():
     infoMsg = "One or more yaml files are used to configure the build.\r\n"

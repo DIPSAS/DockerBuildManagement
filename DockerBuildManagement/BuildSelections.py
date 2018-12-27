@@ -32,8 +32,11 @@ def BuildSelections(selectionsToBuild, buildSelections):
 
 def BuildSelection(buildSelection):
     cwd = BuildTools.TryChangeToDirectoryAndGetCwd(buildSelection)
-    DockerComposeTools.DockerComposeBuild(
-        buildSelection[BuildTools.FILES_KEY])
+    composeFiles = buildSelection[BuildTools.FILES_KEY]
+    DockerComposeTools.DockerComposeBuild(composeFiles)
+    if BuildTools.ADDITIONAL_TAG_KEY in buildSelection:
+        for composeFile in composeFiles:
+            DockerComposeTools.TagImages(composeFile, buildSelection[BuildTools.ADDITIONAL_TAG_KEY])
     os.chdir(cwd)
 
 

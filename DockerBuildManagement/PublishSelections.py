@@ -6,7 +6,6 @@ import os
 
 PUBLISH_KEY = 'publish'
 CONTAINER_ARTIFACT_KEY = 'containerArtifact'
-ADDITIONAL_TAG_KEY = 'additionalTag'
 
 def GetInfoMsg():
     infoMsg = "Publish selections is configured by adding a 'publish' property to the .yaml file.\r\n"
@@ -45,8 +44,8 @@ def PublishContainerSelection(publishSelection, publishSelectionKey):
     publishComposeFile = 'docker-compose.publish.' + publishSelectionKey + '.yml'
     DockerComposeTools.MergeComposeFiles(composeFiles, publishComposeFile)
     DockerComposeTools.PublishDockerImages(publishComposeFile)
-    if ADDITIONAL_TAG_KEY in publishSelection:
-        DockerComposeTools.PublishDockerImagesWithNewTag(publishComposeFile, publishSelection[ADDITIONAL_TAG_KEY])
+    if BuildTools.ADDITIONAL_TAG_KEY in publishSelection:
+        DockerComposeTools.PublishDockerImagesWithNewTag(publishComposeFile, publishSelection[BuildTools.ADDITIONAL_TAG_KEY])
 
 
 def PublishArtifactSelection(publishSelection):
