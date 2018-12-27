@@ -23,20 +23,21 @@ def GetBuildSelections(arguments):
 def BuildSelections(selectionsToBuild, buildSelections):
     if len(selectionsToBuild) == 0:
         for buildSelection in buildSelections:
-            BuildSelection(buildSelections[buildSelection])
+            BuildSelection(buildSelections[buildSelection], buildSelection)
     else:
         for selectionToBuild in selectionsToBuild:
             if selectionToBuild in buildSelections:
-                BuildSelection(buildSelections[selectionToBuild])
+                BuildSelection(buildSelections[selectionToBuild], selectionToBuild)
 
 
-def BuildSelection(buildSelection):
+def BuildSelection(buildSelection, selectionToBuild):
     cwd = BuildTools.TryChangeToDirectoryAndGetCwd(buildSelection)
     composeFiles = buildSelection[BuildTools.FILES_KEY]
-    DockerComposeTools.DockerComposeBuild(composeFiles)
+    buildComposeFile = 'docker-compose.build.' + selectionToBuild + '.yml'
+    DockerComposeTools.MergeComposeFiles(composeFiles, buildComposeFile)
+    DockerComposeTools.DockerComposeBuild([buildComposeFile])
     if BuildTools.ADDITIONAL_TAG_KEY in buildSelection:
-        for composeFile in composeFiles:
-            DockerComposeTools.TagImages(composeFile, buildSelection[BuildTools.ADDITIONAL_TAG_KEY])
+        DockerComposeTools.TagImages(buildComposeFile, buildSelection[BuildTools.ADDITIONAL_TAG_KEY])
     os.chdir(cwd)
 
 
