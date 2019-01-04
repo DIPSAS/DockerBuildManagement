@@ -50,6 +50,7 @@ build:
     selections:
         firstSelection:
             directory: src
+            additionalTag: latest
             files:
                 - docker-compose.proxy.yml
 
