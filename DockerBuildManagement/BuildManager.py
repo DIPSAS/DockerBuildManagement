@@ -1,7 +1,6 @@
 import sys
 import time
 from DockerBuildManagement import ChangelogSelections, BuildSelections, PublishSelections, RunSelections, SwarmSelections, TestSelections, BuildTools
-from SwarmManagement import SwarmTools
 from DockerBuildSystem import DockerSwarmTools, TerminalTools
 
 
@@ -36,7 +35,7 @@ def HandleManagement(arguments):
     if '-help' in arguments and len(arguments) == 1:
         print(GetInfoMsg())
 
-    environmentFiles = SwarmTools.GetEnvironmnetVariablesFiles(arguments)
+    environmentFiles = BuildTools.GetEnvironmnetVariablesFiles(arguments)
     for environmentFile in environmentFiles:
         TerminalTools.LoadEnvironmentVariables(environmentFile)
 

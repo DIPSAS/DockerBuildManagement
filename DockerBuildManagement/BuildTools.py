@@ -23,11 +23,21 @@ def GetDockerBuildManagementYamlData(arguments):
     return yamlData
 
 
+def GetEnvironmnetVariablesFiles(arguments):
+    yamlData = GetDockerBuildManagementYamlData(arguments)
+    envFiles = []
+    if 'env_files' in yamlData:
+        envFiles += yamlData['env_files']
+    envFiles += SwarmTools.GetArgumentValues(arguments, '-env')
+    envFiles += SwarmTools.GetArgumentValues(arguments, '-e')
+    return envFiles
+
+
 def GetProperties(arguments, propertyType, errorInfoMsg):
-    swarmManagementYamlData = GetDockerBuildManagementYamlData(arguments)
+    yamlData = GetDockerBuildManagementYamlData(arguments)
     properties = {}
-    if propertyType in swarmManagementYamlData:
-        properties = swarmManagementYamlData[propertyType]
+    if propertyType in yamlData:
+        properties = yamlData[propertyType]
     return properties
 
 
