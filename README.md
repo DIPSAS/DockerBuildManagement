@@ -30,6 +30,9 @@ changelog:
     file: CHANGELOG.md
     envKey: VERSION
 
+env_files: 
+    - environment.env
+
 run:
     selections:
         firstSelection:
