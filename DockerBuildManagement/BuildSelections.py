@@ -10,11 +10,15 @@ BUILD_KEY = 'build'
 def GetInfoMsg():
     infoMsg = "Build selections is configured by adding a 'build' property to the .yaml file.\r\n"
     infoMsg += "The 'build' property is a dictionary of build selections.\r\n"
+    infoMsg += "Add '-build' to the arguments to build all selections in sequence, or add spesific selection names to build those only.\r\n"
+    infoMsg += "Example: 'dbm -build myBuildSelection'.\r\n"
     return infoMsg
 
 
 def GetBuildSelections(arguments):
-    buildProperty = BuildTools.GetProperties(arguments, BUILD_KEY, GetInfoMsg())
+    yamlData = SwarmTools.LoadYamlDataFromFiles(
+        arguments, [BuildTools.DEFAULT_BUILD_MANAGEMENT_YAML_FILE])
+    buildProperty = SwarmTools.GetProperties(arguments, BUILD_KEY, GetInfoMsg(), yamlData)
     if BuildTools.SELECTIONS_KEY in buildProperty:
         return buildProperty[BuildTools.SELECTIONS_KEY]
     return {}

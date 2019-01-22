@@ -2,6 +2,7 @@ import sys
 import time
 from DockerBuildManagement import ChangelogSelections, BuildSelections, PublishSelections, RunSelections, SwarmSelections, TestSelections, BuildTools
 from DockerBuildSystem import DockerSwarmTools, TerminalTools
+from SwarmManagement import SwarmTools
 
 
 def GetInfoMsg():
@@ -28,6 +29,15 @@ def GetInfoMsg():
     return infoMsg
 
 
+def LoadEnvironmentVariables(arguments):
+    yamlData = SwarmTools.LoadYamlDataFromFiles(
+        arguments, [BuildTools.DEFAULT_BUILD_MANAGEMENT_YAML_FILE])
+    environmentFiles = SwarmTools.GetEnvironmnetVariablesFiles(
+        arguments, yamlData)
+    for environmentFile in environmentFiles:
+        TerminalTools.LoadEnvironmentVariables(environmentFile)
+
+
 def HandleManagement(arguments):
     if len(arguments) == 0:
         print(GetInfoMsg())
@@ -35,10 +45,7 @@ def HandleManagement(arguments):
     if '-help' in arguments and len(arguments) == 1:
         print(GetInfoMsg())
 
-    environmentFiles = BuildTools.GetEnvironmnetVariablesFiles(arguments)
-    for environmentFile in environmentFiles:
-        TerminalTools.LoadEnvironmentVariables(environmentFile)
-
+    LoadEnvironmentVariables(arguments)
     ChangelogSelections.HandleChangelogSelections(arguments)
     SwarmSelections.HandleSwarmSelections(arguments)
     BuildSelections.HandleBuildSelections(arguments)

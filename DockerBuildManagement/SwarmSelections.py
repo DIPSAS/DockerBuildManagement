@@ -11,11 +11,15 @@ PROPERTIES_KEY = 'properties'
 def GetInfoMsg():
     infoMsg = "Test selections is configured by adding a 'swarm' property to the .yaml file.\r\n"
     infoMsg += "The 'swarm' property is a dictionary of swarm selections.\r\n"
+    infoMsg += "Add '-start' to the arguments to initiate the swarms selections, or add spesific selection names to start those only.\r\n"
+    infoMsg += "Example: 'dbm -start mySwarmSelection'.\r\n"
     return infoMsg
 
 
 def GetSwarmSelections(arguments):
-    publishProperty = BuildTools.GetProperties(arguments, SWARM_KEY, GetInfoMsg())
+    yamlData = SwarmTools.LoadYamlDataFromFiles(
+        arguments, [BuildTools.DEFAULT_BUILD_MANAGEMENT_YAML_FILE])
+    publishProperty = SwarmTools.GetProperties(arguments, SWARM_KEY, GetInfoMsg(), yamlData)
     if BuildTools.SELECTIONS_KEY in publishProperty:
         return publishProperty[BuildTools.SELECTIONS_KEY]
     return {}

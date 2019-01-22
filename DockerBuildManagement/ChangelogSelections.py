@@ -9,12 +9,14 @@ FILE_KEY = 'file'
 ENV_VERSION_KEY = 'envKey'
 
 def GetInfoMsg():
-    infoMsg = "Changelog selections is configured by adding a 'changelog' property to the .yaml file.\r\n"
+    infoMsg = "A changelog is configured by adding a 'changelog' property to the .yaml file.\r\n"
     return infoMsg
 
 
 def GetChangelogSelection(arguments):
-    return BuildTools.GetProperties(arguments, CHANGELOG_KEY, GetInfoMsg())
+    yamlData = SwarmTools.LoadYamlDataFromFiles(
+        arguments, [BuildTools.DEFAULT_BUILD_MANAGEMENT_YAML_FILE])
+    return SwarmTools.GetProperties(arguments, CHANGELOG_KEY, GetInfoMsg(), yamlData)
 
 
 def ExportChangelogSelection(changelogSelection):

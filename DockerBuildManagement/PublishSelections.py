@@ -10,11 +10,15 @@ CONTAINER_ARTIFACT_KEY = 'containerArtifact'
 def GetInfoMsg():
     infoMsg = "Publish selections is configured by adding a 'publish' property to the .yaml file.\r\n"
     infoMsg += "The 'publish' property is a dictionary of publish selections.\r\n"
+    infoMsg += "Add '-publish' to the arguments to publish all selections in sequence, or add spesific selection names to publish those only.\r\n"
+    infoMsg += "Example: 'dbm -publish myPublishSelection'.\r\n"
     return infoMsg
 
 
 def GetPublishSelections(arguments):
-    publishProperty = BuildTools.GetProperties(arguments, PUBLISH_KEY, GetInfoMsg())
+    yamlData = SwarmTools.LoadYamlDataFromFiles(
+        arguments, [BuildTools.DEFAULT_BUILD_MANAGEMENT_YAML_FILE])
+    publishProperty = SwarmTools.GetProperties(arguments, PUBLISH_KEY, GetInfoMsg(), yamlData)
     if BuildTools.SELECTIONS_KEY in publishProperty:
         return publishProperty[BuildTools.SELECTIONS_KEY]
     return {}
