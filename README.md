@@ -10,10 +10,9 @@ The application makes it easy to manage a build system based on Docker by config
 
 ## Example
 
-Either of the sections (`run`, `build`, `test`, ..) in the yaml file is triggered with the following cli commands:
+Either of the sections (`run`, `build`, `test`, `publish`) in the yaml file is triggered with the following cli commands:
 - `dbm -run`
 - `dbm -build`
-- `dbm -test`
 - `dbm -test`
 - `dbm -publish`
 
