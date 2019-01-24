@@ -40,6 +40,9 @@ def PublishSelection(publishSelection, publishSelectionKey):
         PublishContainerSelection(publishSelection, publishSelectionKey)
     else:
         PublishArtifactSelection(publishSelection)
+
+    BuildTools.HandleCopyFromContainer(publishSelection)
+    
     os.chdir(cwd)
 
 

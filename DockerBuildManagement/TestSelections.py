@@ -40,8 +40,14 @@ def TestSelection(testSelection):
     cwd = BuildTools.TryChangeToDirectoryAndGetCwd(testSelection)
     DockerComposeTools.ExecuteComposeTests(
         testSelection[BuildTools.FILES_KEY], 
-        testSelection[CONTAINER_NAMES_KEY], 
-        BuildTools.TryGetFromDictionary(testSelection, REMOVE_CONTAINERS_KEY, True))
+        testSelection[CONTAINER_NAMES_KEY], False)
+
+    BuildTools.HandleCopyFromContainer(testSelection)
+
+    if BuildTools.TryGetFromDictionary(testSelection, REMOVE_CONTAINERS_KEY, False):
+        DockerComposeTools.DockerComposeRemove(
+            testSelection[BuildTools.FILES_KEY])
+
     os.chdir(cwd)
 
 

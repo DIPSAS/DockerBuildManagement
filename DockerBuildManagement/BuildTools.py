@@ -1,4 +1,5 @@
 from SwarmManagement import SwarmTools
+from DockerBuildSystem import DockerImageTools
 import os
 
 
@@ -6,6 +7,11 @@ SELECTIONS_KEY = 'selections'
 FILES_KEY = 'files'
 DIRECTORY_KEY = 'directory'
 ADDITIONAL_TAG_KEY = 'additionalTag'
+
+COPY_FROM_CONTAINER_TAG = 'copyFromContainer'
+COPY_CONTAINER_SRC_TAG = 'containerSrc'
+COPY_HOST_DEST_TAG = 'hostDest'
+
 DEFAULT_BUILD_MANAGEMENT_YAML_FILE = 'build-management.yml'
 
 
@@ -29,3 +35,15 @@ def TryGetFromDictionary(dictionary, key, defaultValue):
     if key in dictionary:
         return dictionary[key]
     return defaultValue
+
+def HandleCopyFromContainer(dictionary):
+    if not(COPY_FROM_CONTAINER_TAG in dictionary):
+        return
+
+    for containerName in dictionary[COPY_FROM_CONTAINER_TAG]:
+        containerSrc = dictionary[COPY_FROM_CONTAINER_TAG][containerName][COPY_CONTAINER_SRC_TAG]
+        hostDest = dictionary[COPY_FROM_CONTAINER_TAG][containerName][COPY_HOST_DEST_TAG]
+        if not os.path.exists(hostDest):
+            os.makedirs(hostDest)
+        DockerImageTools.CopyFromContainerToHost(containerName, containerSrc, hostDest)
+

@@ -41,6 +41,9 @@ def RunSelection(runSelection):
         runSelection[BuildTools.FILES_KEY],
         BuildTools.TryGetFromDictionary(runSelection, ABORT_ON_CONTAINER_EXIT_KEY, True), 
         BuildTools.TryGetFromDictionary(runSelection, DETACHED_KEY, False))
+
+    BuildTools.HandleCopyFromContainer(runSelection)
+    
     os.chdir(cwd)
 
 
