@@ -56,7 +56,7 @@ def BuildSwarmManagementPropertiesRow(swarmSelection):
     if not(PROPERTIES_KEY in swarmSelection):
         return swarmManagementProperties
     for swarmManagementProperty in swarmSelection[PROPERTIES_KEY]:
-        swarmManagementProperties += [swarmManagementProperty]
+        swarmManagementProperties += str.split(swarmManagementProperty)
     return swarmManagementProperties
 
 
@@ -67,7 +67,7 @@ def GetPrefix(arguments):
         return '-stop'
     if '-restart' in arguments:
         return '-restart'
-    return '-start'
+    return ''
 
 
 def HandleSwarmSelections(arguments):
