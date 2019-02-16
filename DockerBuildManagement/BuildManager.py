@@ -1,6 +1,5 @@
 import sys
 import time
-import os
 from DockerBuildManagement import ChangelogSelections, BuildSelections, PublishSelections, RunSelections, SwarmSelections, TestSelections, BuildTools
 from DockerBuildSystem import DockerSwarmTools, TerminalTools
 from SwarmManagement import SwarmTools
@@ -31,11 +30,8 @@ def GetInfoMsg():
 
 
 def LoadEnvironmentVariables(arguments):
-    if (not('-file' in arguments) or not('-f') in arguments) \
-        and not(os.path.isfile(BuildTools.DEFAULT_BUILD_MANAGEMENT_YAML_FILE)):
-            return
     yamlData = SwarmTools.LoadYamlDataFromFiles(
-        arguments, [BuildTools.DEFAULT_BUILD_MANAGEMENT_YAML_FILE])
+        arguments, [BuildTools.DEFAULT_BUILD_MANAGEMENT_YAML_FILE], True, True)
     environmentFiles = SwarmTools.GetEnvironmnetVariablesFiles(
         arguments, yamlData)
     for environmentFile in environmentFiles:
