@@ -87,7 +87,7 @@ swarm:
         firstSelection:
             directory: src
             properties:
-                - some-property
+                - -stack -remove proxy
             files:
                 - swarm-management.yml
 ```
