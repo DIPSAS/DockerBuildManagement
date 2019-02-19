@@ -37,12 +37,15 @@ def BuildSelections(selectionsToBuild, buildSelections):
 def BuildSelection(buildSelection, selectionToBuild):
     cwd = BuildTools.TryChangeToDirectoryAndGetCwd(buildSelection)
     BuildTools.HandleTerminalCommandsSelection(buildSelection)
-    composeFiles = buildSelection[BuildTools.FILES_KEY]
-    buildComposeFile = 'docker-compose.build.' + selectionToBuild + '.yml'
-    DockerComposeTools.MergeComposeFiles(composeFiles, buildComposeFile)
-    DockerComposeTools.DockerComposeBuild([buildComposeFile])
-    if BuildTools.ADDITIONAL_TAG_KEY in buildSelection:
-        DockerComposeTools.TagImages(buildComposeFile, buildSelection[BuildTools.ADDITIONAL_TAG_KEY])
+
+    if BuildTools.FILES_KEY in buildSelection:
+        composeFiles = buildSelection[BuildTools.FILES_KEY]
+        buildComposeFile = 'docker-compose.build.' + selectionToBuild + '.yml'
+        DockerComposeTools.MergeComposeFiles(composeFiles, buildComposeFile)
+        DockerComposeTools.DockerComposeBuild([buildComposeFile])
+        if BuildTools.ADDITIONAL_TAG_KEY in buildSelection:
+            DockerComposeTools.TagImages(buildComposeFile, buildSelection[BuildTools.ADDITIONAL_TAG_KEY])
+            
     os.chdir(cwd)
 
 

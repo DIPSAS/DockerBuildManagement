@@ -38,12 +38,14 @@ def RunSelections(selectionsToRun, runSelections):
 def RunSelection(runSelection):
     cwd = BuildTools.TryChangeToDirectoryAndGetCwd(runSelection)
     BuildTools.HandleTerminalCommandsSelection(runSelection)
-    DockerComposeTools.DockerComposeUp(
-        runSelection[BuildTools.FILES_KEY],
-        BuildTools.TryGetFromDictionary(runSelection, ABORT_ON_CONTAINER_EXIT_KEY, True), 
-        BuildTools.TryGetFromDictionary(runSelection, DETACHED_KEY, False))
 
-    BuildTools.HandleCopyFromContainer(runSelection)
+    if BuildTools.FILES_KEY in runSelection:
+        DockerComposeTools.DockerComposeUp(
+            runSelection[BuildTools.FILES_KEY],
+            BuildTools.TryGetFromDictionary(runSelection, ABORT_ON_CONTAINER_EXIT_KEY, True), 
+            BuildTools.TryGetFromDictionary(runSelection, DETACHED_KEY, False))
+
+        BuildTools.HandleCopyFromContainer(runSelection)
     
     os.chdir(cwd)
 

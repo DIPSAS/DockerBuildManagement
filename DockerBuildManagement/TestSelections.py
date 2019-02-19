@@ -39,15 +39,17 @@ def TestSelections(selectionsToTest, testSelections):
 def TestSelection(testSelection):
     cwd = BuildTools.TryChangeToDirectoryAndGetCwd(testSelection)
     BuildTools.HandleTerminalCommandsSelection(testSelection)
-    DockerComposeTools.ExecuteComposeTests(
-        testSelection[BuildTools.FILES_KEY], 
-        testSelection[CONTAINER_NAMES_KEY], False)
 
-    BuildTools.HandleCopyFromContainer(testSelection)
+    if BuildTools.FILES_KEY in testSelection:
+        DockerComposeTools.ExecuteComposeTests(
+            testSelection[BuildTools.FILES_KEY], 
+            testSelection[CONTAINER_NAMES_KEY], False)
 
-    if BuildTools.TryGetFromDictionary(testSelection, REMOVE_CONTAINERS_KEY, False):
-        DockerComposeTools.DockerComposeRemove(
-            testSelection[BuildTools.FILES_KEY])
+        BuildTools.HandleCopyFromContainer(testSelection)
+
+        if BuildTools.TryGetFromDictionary(testSelection, REMOVE_CONTAINERS_KEY, False):
+            DockerComposeTools.DockerComposeRemove(
+                testSelection[BuildTools.FILES_KEY])
 
     os.chdir(cwd)
 
