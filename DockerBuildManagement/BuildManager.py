@@ -29,24 +29,17 @@ def GetInfoMsg():
     return infoMsg
 
 
-def LoadEnvironmentVariables(arguments):
-    yamlData = SwarmTools.LoadYamlDataFromFiles(
-        arguments, [BuildTools.DEFAULT_BUILD_MANAGEMENT_YAML_FILE], True, True)
-    environmentFiles = SwarmTools.GetEnvironmnetVariablesFiles(
-        arguments, yamlData)
-    for environmentFile in environmentFiles:
-        TerminalTools.LoadEnvironmentVariables(environmentFile)
-
-
 def HandleManagement(arguments):
     if len(arguments) == 0:
         print(GetInfoMsg())
+        return
 
     if '-help' in arguments and len(arguments) == 1:
         print(GetInfoMsg())
         return
 
-    LoadEnvironmentVariables(arguments)
+    SwarmTools.LoadEnvironmentVariables(
+        arguments, [BuildTools.DEFAULT_BUILD_MANAGEMENT_YAML_FILE])
     ChangelogSelections.HandleChangelogSelections(arguments)
     SwarmSelections.HandleSwarmSelections(arguments)
     BuildSelections.HandleBuildSelections(arguments)

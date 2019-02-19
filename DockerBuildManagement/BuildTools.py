@@ -1,8 +1,8 @@
 from SwarmManagement import SwarmTools
-from DockerBuildSystem import DockerImageTools
+from DockerBuildSystem import DockerImageTools, TerminalTools
 import os
 
-
+COMMAND_KEY = 'cmd'
 SELECTIONS_KEY = 'selections'
 FILES_KEY = 'files'
 DIRECTORY_KEY = 'directory'
@@ -24,6 +24,13 @@ def GetInfoMsg():
     return infoMsg
 
 
+def HandleTerminalCommandsSelection(selection):
+    if COMMAND_KEY in selection:
+        terminalCommands = selection[COMMAND_KEY]
+        TerminalTools.ExecuteTerminalCommands(terminalCommands, True)
+
+
+
 def TryChangeToDirectoryAndGetCwd(selection):
     cwd = os.getcwd()
     if DIRECTORY_KEY in selection:
@@ -36,6 +43,7 @@ def TryGetFromDictionary(dictionary, key, defaultValue):
     if key in dictionary:
         return dictionary[key]
     return defaultValue
+
 
 def HandleCopyFromContainer(dictionary):
     if not(COPY_FROM_CONTAINER_TAG in dictionary):

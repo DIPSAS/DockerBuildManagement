@@ -36,6 +36,7 @@ def BuildSelections(selectionsToBuild, buildSelections):
 
 def BuildSelection(buildSelection, selectionToBuild):
     cwd = BuildTools.TryChangeToDirectoryAndGetCwd(buildSelection)
+    BuildTools.HandleTerminalCommandsSelection(buildSelection)
     composeFiles = buildSelection[BuildTools.FILES_KEY]
     buildComposeFile = 'docker-compose.build.' + selectionToBuild + '.yml'
     DockerComposeTools.MergeComposeFiles(composeFiles, buildComposeFile)

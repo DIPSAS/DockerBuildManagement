@@ -36,6 +36,7 @@ def PublishSelections(selectionsToPublish, publishSelections):
 
 def PublishSelection(publishSelection, publishSelectionKey):
     cwd = BuildTools.TryChangeToDirectoryAndGetCwd(publishSelection)
+    BuildTools.HandleTerminalCommandsSelection(publishSelection)
     if BuildTools.TryGetFromDictionary(publishSelection, CONTAINER_ARTIFACT_KEY, True):
         PublishContainerSelection(publishSelection, publishSelectionKey)
     else:

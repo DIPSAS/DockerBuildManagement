@@ -37,6 +37,7 @@ def RunSelections(selectionsToRun, runSelections):
 
 def RunSelection(runSelection):
     cwd = BuildTools.TryChangeToDirectoryAndGetCwd(runSelection)
+    BuildTools.HandleTerminalCommandsSelection(runSelection)
     DockerComposeTools.DockerComposeUp(
         runSelection[BuildTools.FILES_KEY],
         BuildTools.TryGetFromDictionary(runSelection, ABORT_ON_CONTAINER_EXIT_KEY, True), 
