@@ -39,6 +39,8 @@ run:
     selections:
         firstSelection:
             directory: src
+            cmd:
+                - <optional_terminal_command_executed_before_compose_selections>
             abortOnContainerExit: true
             detached: false
             files:
@@ -55,6 +57,8 @@ build:
     selections:
         firstSelection:
             directory: src
+            cmd:
+                - <optional_terminal_command_executed_before_compose_selections>
             additionalTag: latest
             files:
                 - docker-compose.proxy.yml
@@ -63,6 +67,8 @@ test:
     selections:
         firstSelection:
             directory: src
+            cmd:
+                - <optional_terminal_command_executed_before_compose_selections>
             removeContainers: true
             containerNames:
                 - ssl-proxy-web-c-name
@@ -73,6 +79,8 @@ publish:
     selections:
         firstSelection:
             directory: src
+            cmd:
+                - <optional_terminal_command_executed_before_compose_selections>
             additionalTag: latest
             files:
                 - docker-compose.proxy.yml
@@ -86,6 +94,8 @@ swarm:
     selections:
         firstSelection:
             directory: src
+            cmd:
+                - <optional_terminal_command_executed_before_compose_selections>
             properties:
                 - -stack -remove proxy
             files:
