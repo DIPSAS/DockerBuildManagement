@@ -40,6 +40,9 @@ def HandleManagement(arguments):
 
     SwarmTools.LoadEnvironmentVariables(
         arguments, [BuildTools.DEFAULT_BUILD_MANAGEMENT_YAML_FILE])
+    SwarmTools.HandleDumpYamlData(
+        arguments, [BuildTools.DEFAULT_BUILD_MANAGEMENT_YAML_FILE])
+
     ChangelogSelections.HandleChangelogSelections(arguments)
     SwarmSelections.HandleSwarmSelections(arguments)
     BuildSelections.HandleBuildSelections(arguments)
