@@ -21,6 +21,7 @@ def GetInfoMsg():
     infoMsg += "A yaml file may be specified by adding '-file' or '-f' to the arguments.\r\n"
     infoMsg += "Example: -f build-management-1.yml -f build-management-2.yml\r\n"
     infoMsg += SwarmTools.GetEnvironmentVariablesInfoMsg()
+    infoMsg += SwarmTools.GetYamlDumpInfoMsg()
     return infoMsg
 
 
