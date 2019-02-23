@@ -1,6 +1,5 @@
 version: '3.3'
 
 services:
-    ssl-proxy-web:
-        container_name: ssl-proxy-web-c-name
+    nginx-proxy:
         image: nginx:latest

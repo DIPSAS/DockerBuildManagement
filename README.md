@@ -40,62 +40,60 @@ run:
         firstSelection:
             directory: src
             cmd:
-                - <optional_terminal_command_executed_before_compose_selections>
+                - python ./pythonSnippet.py
             abortOnContainerExit: true
             detached: false
             files:
-                - docker-compose.proxy.yml
-                - docker-compose.proxy.2.yml
+                - docker-compose.pythonSnippet.yml
+                - docker-compose.pythonSnippet.overriden.yml
         secondSelection:
             directory: src
-            abortOnContainerExit: false
-            detached: false
             files:
-                - docker-compose.proxy.yml
+                - docker-compose.pythonSnippet.yml
 
 build:
     selections:
         firstSelection:
             directory: src
             cmd:
-                - <optional_terminal_command_executed_before_compose_selections>
+                - python ./pythonSnippet.py
             additionalTag: latest
             files:
-                - docker-compose.proxy.yml
+                - docker-compose.pythonSnippet.yml
 
 test:
     selections:
         firstSelection:
             directory: src
             cmd:
-                - <optional_terminal_command_executed_before_compose_selections>
+                - python ./pythonSnippet.py
             removeContainers: true
             containerNames:
-                - ssl-proxy-web-c-name
+                - pythonSnippet
             files:
-                - docker-compose.proxy.yml
+                - docker-compose.pythonSnippet.yml
 
 publish:
     selections:
         firstSelection:
             directory: src
             cmd:
-                - <optional_terminal_command_executed_before_compose_selections>
+                - python ./pythonSnippet.py
             additionalTag: latest
             files:
-                - docker-compose.proxy.yml
+                - docker-compose.pythonSnippet.yml
         secondSelection:
             directory: src
             containerArtifact: false
             files:
-                - docker-compose.proxy.yml
+                - docker-compose.pythonSnippet.yml
 
 swarm:
     selections:
         firstSelection:
             directory: src
             cmd:
-                - <optional_terminal_command_executed_before_compose_selections>
+                - python ./pythonSnippet.py
             properties:
                 - -stack -remove proxy
             files:
@@ -116,7 +114,10 @@ Or take a look at another project which takes use of this library:
 - The pip package may be located at:
     - https://pypi.org/project/DockerBuildManagement
 
-## Publish New Version.
+## Publish New Version
 1. Configure setup.py with new version.
 2. Build: python setup.py bdist_wheel
 3. Publish: twine upload dist/*
+
+## Run Unit Tests
+- python -m unittest
