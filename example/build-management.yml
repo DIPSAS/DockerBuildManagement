@@ -9,6 +9,10 @@ run:
     selections:
         firstSelection:
             directory: src
+            copyFromContainer:
+                pythonSnippet:
+                    containerSrc: /src/
+                    hostDest: output/
             cmd:
                 - python ./pythonSnippet.py
             abortOnContainerExit: true

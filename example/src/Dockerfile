@@ -1,5 +1,5 @@
 FROM python:2.7-slim
 
-COPY ./pythonSnippet.py ./pythonSnippet.py
+COPY ./pythonSnippet.py ./src/pythonSnippet.py
 
-ENTRYPOINT python ./pythonSnippet.py
+ENTRYPOINT python ./src/pythonSnippet.py
