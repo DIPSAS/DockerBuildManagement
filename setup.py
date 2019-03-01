@@ -135,7 +135,7 @@ setup(
     # https://packaging.python.org/en/latest/requirements.html
     install_requires=[
         'DockerBuildSystem>=1.1.22',
-        'SwarmManagement>=1.1.33'],  # Optional
+        'SwarmManagement>=1.1.35'],  # Optional
 
     # List additional groups of dependencies here (e.g. development
     # dependencies). Users will be able to install these using the "extras"
