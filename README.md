@@ -7,7 +7,7 @@
 Build Management is a python application, installed with pip.
 The application makes it easy to manage a build system based on Docker by configuring a single *.yml file describing how to build the solution.
 
-## Install And/Or Upgrade
+## Install Or Upgrade
 - pip install --upgrade DockerBuildManagement
 
 ## Example
@@ -161,6 +161,8 @@ The `swarm` section helps to deploy service stacks to your local swarm. It reuse
 ## Prerequisites
 - Docker:
     - https://www.docker.com/get-docker
+- Install Dependencies:
+    - pip install -r requirements.txt
 
 ## Additional Info
 - The pip package may be located at:
