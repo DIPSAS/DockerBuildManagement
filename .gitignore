@@ -15,6 +15,7 @@ __pycache__/
 .vscode/
 .idea/
 
+example/output/
 **output/
 docker-compose.build.*.yml
 docker-compose.publish.*.yml

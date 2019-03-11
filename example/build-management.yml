@@ -32,6 +32,7 @@ build:
             cmd:
                 - python ./pythonSnippet.py
             additionalTag: latest
+            saveImages: ../output
             files:
                 - docker-compose.pythonSnippet.yml
 

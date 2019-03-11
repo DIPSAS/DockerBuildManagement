@@ -11,7 +11,8 @@ DETACHED_KEY = 'detached'
 def GetInfoMsg():
     infoMsg = "Run selections is configured by adding a 'run' property to the .yaml file.\r\n"
     infoMsg += "The 'run' property is a dictionary of run selections.\r\n"
-    infoMsg += "Add '-run' to the arguments to run all runnable selections in sequence, or add spesific selection names to run those only.\r\n"
+    infoMsg += "Add '-run' to the arguments to run all runnable selections in sequence, \r\n"
+    infoMsg += "or add specific selection names to run those only.\r\n"
     infoMsg += "Example: 'dbm -run myRunnableSelection'.\r\n"
     return infoMsg
 
@@ -42,7 +43,7 @@ def RunSelection(runSelection):
     if BuildTools.FILES_KEY in runSelection:
         DockerComposeTools.DockerComposeUp(
             runSelection[BuildTools.FILES_KEY],
-            BuildTools.TryGetFromDictionary(runSelection, ABORT_ON_CONTAINER_EXIT_KEY, True), 
+            BuildTools.TryGetFromDictionary(runSelection, ABORT_ON_CONTAINER_EXIT_KEY, True),
             BuildTools.TryGetFromDictionary(runSelection, DETACHED_KEY, False))
 
         BuildTools.HandleCopyFromContainer(runSelection)

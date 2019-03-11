@@ -10,7 +10,8 @@ CONTAINER_ARTIFACT_KEY = 'containerArtifact'
 def GetInfoMsg():
     infoMsg = "Publish selections is configured by adding a 'publish' property to the .yaml file.\r\n"
     infoMsg += "The 'publish' property is a dictionary of publish selections.\r\n"
-    infoMsg += "Add '-publish' to the arguments to publish all selections in sequence, or add spesific selection names to publish those only.\r\n"
+    infoMsg += "Add '-publish' to the arguments to publish all selections in sequence, \r\n"
+    infoMsg += "or add specific selection names to publish those only.\r\n"
     infoMsg += "Example: 'dbm -publish myPublishSelection'.\r\n"
     return infoMsg
 

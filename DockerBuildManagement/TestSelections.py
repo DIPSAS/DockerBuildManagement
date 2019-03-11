@@ -12,7 +12,8 @@ REMOVE_CONTAINERS_KEY = 'removeContainers'
 def GetInfoMsg():
     infoMsg = "Test selections is configured by adding a 'test' property to the .yaml file.\r\n"
     infoMsg += "The 'test' property is a dictionary of test selections.\r\n"
-    infoMsg += "Add '-test' to the arguments to run all test selections in sequence, or add spesific selection names to test those only.\r\n"
+    infoMsg += "Add '-test' to the arguments to run all test selections in sequence, \r\n"
+    infoMsg += "or add specific selection names to test those only.\r\n"
     infoMsg += "Example: 'dbm -test myTestSelection'.\r\n"
     return infoMsg
 

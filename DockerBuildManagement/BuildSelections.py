@@ -5,12 +5,14 @@ import sys
 import os
 
 BUILD_KEY = 'build'
+SAVE_IMAGES_KEY = 'saveImages'
 
 
 def GetInfoMsg():
     infoMsg = "Build selections is configured by adding a 'build' property to the .yaml file.\r\n"
     infoMsg += "The 'build' property is a dictionary of build selections.\r\n"
-    infoMsg += "Add '-build' to the arguments to build all selections in sequence, or add spesific selection names to build those only.\r\n"
+    infoMsg += "Add '-build' to the arguments to build all selections in sequence, \r\n"
+    infoMsg += "or add specific selection names to build those only.\r\n"
     infoMsg += "Example: 'dbm -build myBuildSelection'.\r\n"
     return infoMsg
 
@@ -45,6 +47,9 @@ def BuildSelection(buildSelection, selectionToBuild):
         DockerComposeTools.DockerComposeBuild([buildComposeFile])
         if BuildTools.ADDITIONAL_TAG_KEY in buildSelection:
             DockerComposeTools.TagImages(buildComposeFile, buildSelection[BuildTools.ADDITIONAL_TAG_KEY])
+        if SAVE_IMAGES_KEY in buildSelection:
+            outputFolder = buildSelection[SAVE_IMAGES_KEY]
+            DockerComposeTools.SaveImages(buildComposeFile, outputFolder)
             
     os.chdir(cwd)
 

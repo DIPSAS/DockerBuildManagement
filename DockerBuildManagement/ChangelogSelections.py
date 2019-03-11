@@ -2,7 +2,6 @@ from DockerBuildSystem import VersionTools
 from SwarmManagement import SwarmTools
 from DockerBuildManagement import BuildTools
 import sys
-import os
 
 CHANGELOG_KEY = 'changelog'
 FILE_KEY = 'file'
@@ -10,6 +9,8 @@ ENV_VERSION_KEY = 'envKey'
 
 def GetInfoMsg():
     infoMsg = "A changelog is configured by adding a 'changelog' property to the .yaml file.\r\n"
+    infoMsg += "Set the '{0}' property with the changelog filename (CHANGELOG.md), \r\n".format(FILE_KEY)
+    infoMsg += "and set the '{0}' property with the exposed environment key (VERSION) \r\n".format(ENV_VERSION_KEY)
     return infoMsg
 
 

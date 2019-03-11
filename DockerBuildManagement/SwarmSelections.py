@@ -1,4 +1,3 @@
-from DockerBuildSystem import DockerComposeTools
 from SwarmManagement import SwarmTools, SwarmManager
 from DockerBuildManagement import BuildTools
 import sys
@@ -9,11 +8,14 @@ PROPERTIES_KEY = 'properties'
 
 
 def GetInfoMsg():
-    infoMsg = "Test selections is configured by adding a 'swarm' property to the .yaml file.\r\n"
+    infoMsg = "Swarm selections is configured by adding a 'swarm' property to the .yaml file.\r\n"
     infoMsg += "The 'swarm' property is a dictionary of swarm selections.\r\n"
-    infoMsg += "Add '-start' to the arguments to initiate all swarm selections, or add spesific selection names to start those only.\r\n"
-    infoMsg += "Add '-stop' to the arguments to stop all swarm selections, or add spesific selection names to stop those only.\r\n"
-    infoMsg += "Add '-restart' to the arguments to restart all swarm selections, or add spesific selection names to restart those only.\r\n"
+    infoMsg += "Add '-start' to the arguments to initiate all swarm selections, \r\n"
+    infoMsg += "or add specific selection names to start those only.\r\n"
+    infoMsg += "Add '-stop' to the arguments to stop all swarm selections, \r\n"
+    infoMsg += "or add specific selection names to stop those only.\r\n"
+    infoMsg += "Add '-restart' to the arguments to restart all swarm selections, \r\n"
+    infoMsg += "or add specific selection names to restart those only.\r\n"
     infoMsg += "Example: 'dbm -start mySwarmSelection'.\r\n"
     infoMsg += "Example: 'dbm -stop mySwarmSelection'.\r\n"
     infoMsg += "Example: 'dbm -restart mySwarmSelection'.\r\n"

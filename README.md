@@ -70,6 +70,7 @@ build:
             cmd:
                 - python ./pythonSnippet.py
             additionalTag: latest
+            saveImages: ../output
             files:
                 - docker-compose.pythonSnippet.yml
 
@@ -136,6 +137,7 @@ The `run` section runs all listed docker-compose files with `docker-compose up`.
 ### Build Features
 The `build` section builds all docker images as described by the `docker-compose.yml` files.
 - `additionalTag: <additional_image_tag>` -> Include an additional tag to all built docker images.
+- `saveImages: <output_folder>` -> Save all built docker images from the compose file as tar files. The files will be saved in the given output folder.
 
 ### Test Features
 The `test` section runs all services listed in the `docker-compose.yml` files, and detects if either of the services exited with a non-zero exit code due to an error.
