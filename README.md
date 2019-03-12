@@ -137,6 +137,7 @@ The `run` section runs all listed docker-compose files with `docker-compose up`.
 ### Build Features
 The `build` section builds all docker images as described by the `docker-compose.yml` files.
 - `additionalTag: <additional_image_tag>` -> Include an additional tag to all built docker images.
+- `additionalTags: <list_of_additional_image_tags>` -> Include a list of additional tags to all built docker images.
 - `saveImages: <output_folder>` -> Save all built docker images from the compose file as tar files. The files will be saved in the given output folder.
 
 ### Test Features
@@ -147,6 +148,7 @@ The `test` section runs all services listed in the `docker-compose.yml` files, a
 ### Publish Features
 The `publish` section publishes all docker images listed in the `docker-compose.yml` files.
 - `additionalTag: <additional_image_tag>` -> Include an additional tag to publish with the docker images.
+- `additionalTags: <list_of_additional_image_tags>` -> Include a list of additional tags to publish with the docker images.
 - `containerArtifact: true/false` -> Sometimes the solution does not publish docker images, but just something else such as nugets, pypi or gem packages. With this property set to `true`, you can make a docker container do the work of publishing the artifact. Default is `false`.
 
 ### Swarm Features

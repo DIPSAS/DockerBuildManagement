@@ -57,6 +57,9 @@ def PublishContainerSelection(publishSelection, publishSelectionKey):
     DockerComposeTools.PublishDockerImages(publishComposeFile)
     if BuildTools.ADDITIONAL_TAG_KEY in publishSelection:
         DockerComposeTools.PublishDockerImagesWithNewTag(publishComposeFile, publishSelection[BuildTools.ADDITIONAL_TAG_KEY])
+    if BuildTools.ADDITIONAL_TAGS_KEY in publishSelection:
+        for tag in publishSelection[BuildTools.ADDITIONAL_TAGS_KEY]:
+            DockerComposeTools.PublishDockerImagesWithNewTag(publishComposeFile, tag)
 
 
 def PublishArtifactSelection(publishSelection):

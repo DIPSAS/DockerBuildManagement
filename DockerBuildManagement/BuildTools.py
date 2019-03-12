@@ -7,6 +7,7 @@ SELECTIONS_KEY = 'selections'
 FILES_KEY = 'files'
 DIRECTORY_KEY = 'directory'
 ADDITIONAL_TAG_KEY = 'additionalTag'
+ADDITIONAL_TAGS_KEY = 'additionalTags'
 
 COPY_FROM_CONTAINER_TAG = 'copyFromContainer'
 COPY_CONTAINER_SRC_TAG = 'containerSrc'

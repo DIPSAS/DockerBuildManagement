@@ -47,6 +47,9 @@ def BuildSelection(buildSelection, selectionToBuild):
         DockerComposeTools.DockerComposeBuild([buildComposeFile])
         if BuildTools.ADDITIONAL_TAG_KEY in buildSelection:
             DockerComposeTools.TagImages(buildComposeFile, buildSelection[BuildTools.ADDITIONAL_TAG_KEY])
+        if BuildTools.ADDITIONAL_TAGS_KEY in buildSelection:
+            for tag in buildSelection[BuildTools.ADDITIONAL_TAGS_KEY]:
+                DockerComposeTools.TagImages(buildComposeFile, tag)
         if SAVE_IMAGES_KEY in buildSelection:
             outputFolder = buildSelection[SAVE_IMAGES_KEY]
             DockerComposeTools.SaveImages(buildComposeFile, outputFolder)
