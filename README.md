@@ -70,6 +70,9 @@ build:
             cmd:
                 - python ./pythonSnippet.py
             additionalTag: latest
+            additionalTags:
+                - beta
+                - zeta
             saveImages: ../output
             files:
                 - docker-compose.pythonSnippet.yml
@@ -93,6 +96,9 @@ publish:
             cmd:
                 - python ./pythonSnippet.py
             additionalTag: latest
+            additionalTags:
+                - beta
+                - zeta
             files:
                 - docker-compose.pythonSnippet.yml
         secondSelection:
