@@ -10,6 +10,9 @@ The application makes it easy to manage a build system based on Docker by config
 ## Install Or Upgrade
 - pip install --upgrade DockerBuildManagement
 
+## Verify Installation
+- `dbm -help`
+
 ## Example
 
 Either of the sections (`run`, `build`, `test`, `publish`) in the yaml file is triggered with the following cli commands:
@@ -25,9 +28,10 @@ It is also possible to execute multiple command sections in the same command lin
 - `dbm -test -build -run secondSelection`
 
 The `swarm` section helps deploying necessary domain services needed in the development.
-Start/Stop the swarm:
-- `dbm -start`
-- `dbm -stop`
+Start/Stop/Restart the swarm:
+- `dbm -swarm -start`
+- `dbm -swarm -stop`
+- `dbm -swarm -restart`
 
 Please refer to the [SwarmManagement](https://github.com/DIPSAS/SwarmManagement) project for further info on how to configure the swarm deployment.
 

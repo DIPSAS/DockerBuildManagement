@@ -10,24 +10,24 @@ PROPERTIES_KEY = 'properties'
 def GetInfoMsg():
     infoMsg = "Swarm selections is configured by adding a 'swarm' property to the .yaml file.\r\n"
     infoMsg += "The 'swarm' property is a dictionary of swarm selections.\r\n"
-    infoMsg += "Add '-start' to the arguments to initiate all swarm selections, \r\n"
+    infoMsg += "Add '-swarm -start' to the arguments to initiate all swarm selections, \r\n"
     infoMsg += "or add specific selection names to start those only.\r\n"
-    infoMsg += "Add '-stop' to the arguments to stop all swarm selections, \r\n"
+    infoMsg += "Add '-swarm -stop' to the arguments to stop all swarm selections, \r\n"
     infoMsg += "or add specific selection names to stop those only.\r\n"
-    infoMsg += "Add '-restart' to the arguments to restart all swarm selections, \r\n"
+    infoMsg += "Add '-swarm -restart' to the arguments to restart all swarm selections, \r\n"
     infoMsg += "or add specific selection names to restart those only.\r\n"
-    infoMsg += "Example: 'dbm -start mySwarmSelection'.\r\n"
-    infoMsg += "Example: 'dbm -stop mySwarmSelection'.\r\n"
-    infoMsg += "Example: 'dbm -restart mySwarmSelection'.\r\n"
+    infoMsg += "Example: 'dbm -swarm -start mySwarmSelection'.\r\n"
+    infoMsg += "Example: 'dbm -swarm -stop mySwarmSelection'.\r\n"
+    infoMsg += "Example: 'dbm -swarm -restart mySwarmSelection'.\r\n"
     return infoMsg
 
 
 def GetSwarmSelections(arguments):
     yamlData = SwarmTools.LoadYamlDataFromFiles(
         arguments, [BuildTools.DEFAULT_BUILD_MANAGEMENT_YAML_FILE])
-    publishProperty = SwarmTools.GetProperties(arguments, SWARM_KEY, GetInfoMsg(), yamlData)
-    if BuildTools.SELECTIONS_KEY in publishProperty:
-        return publishProperty[BuildTools.SELECTIONS_KEY]
+    swarmProperty = SwarmTools.GetProperties(arguments, SWARM_KEY, GetInfoMsg(), yamlData)
+    if BuildTools.SELECTIONS_KEY in swarmProperty:
+        return swarmProperty[BuildTools.SELECTIONS_KEY]
     return {}
 
 
@@ -67,7 +67,7 @@ def BuildSwarmManagementPropertiesRow(swarmSelection):
     return swarmManagementProperties
 
 
-def GetPrefix(arguments):
+def GetSwarmCommand(arguments):
     if '-start' in arguments:
         return '-start'
     if '-stop' in arguments:
@@ -77,21 +77,41 @@ def GetPrefix(arguments):
     return ''
 
 
+def CheckSwarmCommandInArguments(arguments):
+    if GetSwarmCommand(arguments) == '':
+        return False
+    return True
+
+
+def CheckSwarmInArguments(arguments):
+    if '-swarm' in arguments or '-s' in arguments:
+        return True
+    return False
+
+
 def HandleSwarmSelections(arguments):
     if len(arguments) == 0:
         return
-    if not('-start' in arguments or '-stop' in arguments or '-restart' in arguments or '-swarm' in arguments):
+    if not(CheckSwarmInArguments(arguments)) and not(CheckSwarmCommandInArguments(arguments)):
         return
 
     if '-help' in arguments:
         print(GetInfoMsg())
         return
 
+    if CheckSwarmInArguments(arguments) and not(CheckSwarmCommandInArguments(arguments)):
+        print(GetInfoMsg())
+
     swarmSelectionsToDeploy = SwarmTools.GetArgumentValues(arguments, '-swarm')
     swarmSelectionsToDeploy += SwarmTools.GetArgumentValues(arguments, '-s')
 
+    if not(CheckSwarmInArguments(arguments)) and CheckSwarmCommandInArguments(arguments):
+        swarmSelectionsToDeploy += SwarmTools.GetArgumentValues(arguments, '-start')
+        swarmSelectionsToDeploy += SwarmTools.GetArgumentValues(arguments, '-stop')
+        swarmSelectionsToDeploy += SwarmTools.GetArgumentValues(arguments, '-restart')
+
     swarmSelections = GetSwarmSelections(arguments)
-    DeploySwarmSelections(swarmSelectionsToDeploy, swarmSelections, GetPrefix(arguments))
+    DeploySwarmSelections(swarmSelectionsToDeploy, swarmSelections, GetSwarmCommand(arguments))
 
 
 if __name__ == "__main__":
