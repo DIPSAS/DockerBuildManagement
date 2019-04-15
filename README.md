@@ -140,7 +140,7 @@ Or take a look at another project which takes use of this library:
 The `run` section runs all listed docker-compose files with `docker-compose up`.
 - `abortOnContainerExit: true/false` -> Tell docker-compose to abort when either of the containers exits. Default is `true`.
 - `detached: true/false` -> Tell docker-compose to run the services in detached mode. Default is `false`.
-    - Note that the `abortOnContainerExit` property needs to be set to `false` for this feature to be active. 
+    - Note that the `abortOnContainerExit` property will be ignored if `detached` is set to `true`. 
       - docker-compose does not allow to run a compose file as detached while telling it to abort on container exit.
 - `copyFromContainer` -> Copy anything from a docker container to a destination on your computer. The section contains keys matching the container name, and this key has the following sub-keys:
     - `containerSrc: <folder_path/file_path>` -> Source path to copy from the container.
