@@ -44,8 +44,8 @@ def HandleManagement(arguments):
         TestSelections.HandleTestSelections(arguments)
         RunSelections.HandleRunSelections(arguments)
         PublishSelections.HandlePublishSelections(arguments)
-    except FileNotFoundError:
-        print("\033[1;31;49m[dbm] Could not find build-management.yml in current directory.")
+    except FileNotFoundError as fileNotFound:
+        print("\033[1;31;49m[dbm] Could not find " + fileNotFound.filename + " in current directory.")
         exit(-1)
     except Exception as error:
         print (error)
