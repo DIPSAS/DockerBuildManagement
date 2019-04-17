@@ -32,17 +32,24 @@ def HandleManagement(arguments):
         print(GetInfoMsg())
         return
 
-    SwarmTools.LoadEnvironmentVariables(
-        arguments, [BuildTools.DEFAULT_BUILD_MANAGEMENT_YAML_FILE])
-    SwarmTools.HandleDumpYamlData(
-        arguments, [BuildTools.DEFAULT_BUILD_MANAGEMENT_YAML_FILE])
+    try:
+        SwarmTools.LoadEnvironmentVariables(
+            arguments, [BuildTools.DEFAULT_BUILD_MANAGEMENT_YAML_FILE])
+        SwarmTools.HandleDumpYamlData(
+            arguments, [BuildTools.DEFAULT_BUILD_MANAGEMENT_YAML_FILE])
 
-    ChangelogSelections.HandleChangelogSelections(arguments)
-    SwarmSelections.HandleSwarmSelections(arguments)
-    BuildSelections.HandleBuildSelections(arguments)
-    TestSelections.HandleTestSelections(arguments)
-    RunSelections.HandleRunSelections(arguments)
-    PublishSelections.HandlePublishSelections(arguments)
+        ChangelogSelections.HandleChangelogSelections(arguments)
+        SwarmSelections.HandleSwarmSelections(arguments)
+        BuildSelections.HandleBuildSelections(arguments)
+        TestSelections.HandleTestSelections(arguments)
+        RunSelections.HandleRunSelections(arguments)
+        PublishSelections.HandlePublishSelections(arguments)
+    except FileNotFoundError:
+        print("\033[1;31;49m[dbm] Could not find build-management.yml in current directory.")
+        exit(-1)
+    except Exception as error:
+        print (error)
+        exit(-1)
 
 if __name__ == "__main__":
     arguments = sys.argv[1:]
