@@ -13,7 +13,7 @@ COPY_FROM_CONTAINER_TAG = 'copyFromContainer'
 COPY_CONTAINER_SRC_TAG = 'containerSrc'
 COPY_HOST_DEST_TAG = 'hostDest'
 
-DEFAULT_BUILD_MANAGEMENT_YAML_FILE = 'build-management.yml'
+DEFAULT_BUILD_MANAGEMENT_YAML_FILES = ['build-management.yml', 'build.management.yml']
 
 
 def GetInfoMsg():

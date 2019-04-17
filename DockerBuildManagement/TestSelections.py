@@ -20,7 +20,7 @@ def GetInfoMsg():
 
 def GetTestSelections(arguments):
     yamlData = SwarmTools.LoadYamlDataFromFiles(
-        arguments, [BuildTools.DEFAULT_BUILD_MANAGEMENT_YAML_FILE])
+        arguments, BuildTools.DEFAULT_BUILD_MANAGEMENT_YAML_FILES)
     testProperty = SwarmTools.GetProperties(arguments, TEST_KEY, GetInfoMsg(), yamlData)
     if BuildTools.SELECTIONS_KEY in testProperty:
         return testProperty[BuildTools.SELECTIONS_KEY]

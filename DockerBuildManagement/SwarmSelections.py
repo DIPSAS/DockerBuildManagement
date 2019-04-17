@@ -24,7 +24,7 @@ def GetInfoMsg():
 
 def GetSwarmSelections(arguments):
     yamlData = SwarmTools.LoadYamlDataFromFiles(
-        arguments, [BuildTools.DEFAULT_BUILD_MANAGEMENT_YAML_FILE])
+        arguments, BuildTools.DEFAULT_BUILD_MANAGEMENT_YAML_FILES)
     swarmProperty = SwarmTools.GetProperties(arguments, SWARM_KEY, GetInfoMsg(), yamlData)
     if BuildTools.SELECTIONS_KEY in swarmProperty:
         return swarmProperty[BuildTools.SELECTIONS_KEY]

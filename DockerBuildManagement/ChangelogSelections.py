@@ -16,7 +16,7 @@ def GetInfoMsg():
 
 def GetChangelogSelection(arguments):
     yamlData = SwarmTools.LoadYamlDataFromFiles(
-        arguments, [BuildTools.DEFAULT_BUILD_MANAGEMENT_YAML_FILE])
+        arguments, BuildTools.DEFAULT_BUILD_MANAGEMENT_YAML_FILES)
     return SwarmTools.GetProperties(arguments, CHANGELOG_KEY, GetInfoMsg(), yamlData)
 
 
