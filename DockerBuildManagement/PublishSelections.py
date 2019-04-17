@@ -18,7 +18,7 @@ def GetInfoMsg():
 
 def GetPublishSelections(arguments):
     yamlData = SwarmTools.LoadYamlDataFromFiles(
-        arguments, [BuildTools.DEFAULT_BUILD_MANAGEMENT_YAML_FILE])
+        arguments, BuildTools.DEFAULT_BUILD_MANAGEMENT_YAML_FILES)
     publishProperty = SwarmTools.GetProperties(arguments, PUBLISH_KEY, GetInfoMsg(), yamlData)
     if BuildTools.SELECTIONS_KEY in publishProperty:
         return publishProperty[BuildTools.SELECTIONS_KEY]

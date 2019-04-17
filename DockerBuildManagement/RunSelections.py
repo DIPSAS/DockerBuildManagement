@@ -19,7 +19,7 @@ def GetInfoMsg():
 
 def GetRunSelections(arguments):
     yamlData = SwarmTools.LoadYamlDataFromFiles(
-        arguments, [BuildTools.DEFAULT_BUILD_MANAGEMENT_YAML_FILE])
+        arguments, BuildTools.DEFAULT_BUILD_MANAGEMENT_YAML_FILES)
     runProperty = SwarmTools.GetProperties(arguments, RUN_KEY, GetInfoMsg(), yamlData)
     if BuildTools.SELECTIONS_KEY in runProperty:
         return runProperty[BuildTools.SELECTIONS_KEY]
