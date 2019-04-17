@@ -13,14 +13,18 @@ COPY_FROM_CONTAINER_TAG = 'copyFromContainer'
 COPY_CONTAINER_SRC_TAG = 'containerSrc'
 COPY_HOST_DEST_TAG = 'hostDest'
 
-DEFAULT_BUILD_MANAGEMENT_YAML_FILES = ['build-management.yml', 'build.management.yml']
+DEFAULT_BUILD_MANAGEMENT_YAML_FILES = [
+    'build.management.yml', 
+    'build.management.yaml',
+    'build-management.yml',
+    'build-management.yaml']
 
 
 def GetInfoMsg():
     infoMsg = "One or more yaml files are used to configure the build.\r\n"
-    infoMsg += "The yaml file 'build-management.yml' is used by default if no other files are specified.\r\n"
+    infoMsg += "The yaml file 'build.management.yml' is used by default if no other files are specified.\r\n"
     infoMsg += "A yaml file may be specified by adding '-file' or '-f' to the arguments.\r\n"
-    infoMsg += "Example: -f build-management-1.yml -f build-management-2.yml\r\n"
+    infoMsg += "Example: -f build.management-1.yml -f build.management-2.yml\r\n"
     infoMsg += SwarmTools.GetEnvironmentVariablesInfoMsg()
     infoMsg += SwarmTools.GetYamlDumpInfoMsg()
     return infoMsg

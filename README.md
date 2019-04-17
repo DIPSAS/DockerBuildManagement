@@ -35,7 +35,7 @@ Start/Stop/Restart the swarm:
 
 Please refer to the [SwarmManagement](https://github.com/DIPSAS/SwarmManagement) project for further info on how to configure the swarm deployment.
 
-By convention, the default yaml filename is `build-management.yml`.
+By convention, the default yaml filename is `build.management.yml`.
 It is possible to specify a separate yaml file (or multiple) with the `-f` key:
 - `dbm -f my-build.yml -run`
 

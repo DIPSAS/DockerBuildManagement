@@ -21,26 +21,7 @@ def GetInfoMsg():
     infoMsg += BuildTools.GetInfoMsg() + "\r\n\r\n"
     infoMsg += "Add '-help' to arguments to print this info again.\r\n\r\n"
     return infoMsg
-
-def GetNoYmlFilesFoundMsg():
-    infoMsg = "\033[1;31;49mError Docker Build Management\r\n"
-    infoMsg += "\033[0;37;49mCould not find any supported build management files.\r\n"
-    infoMsg += "Are you in the right directory?\r\n"
-    infoMsg += "Supported build files: " + str.join(', ', BuildTools.DEFAULT_BUILD_MANAGEMENT_YAML_FILES)
-    return infoMsg
-
-def AssertYamlFilesExists():
-    buildFiles = BuildTools.DEFAULT_BUILD_MANAGEMENT_YAML_FILES.copy()
-    for buildFile in BuildTools.DEFAULT_BUILD_MANAGEMENT_YAML_FILES:
-        
-        if not os.path.isfile(buildFile):
-            buildFiles.remove(buildFile)
     
-    if len(buildFiles) == 0:
-        print(GetNoYmlFilesFoundMsg())
-        exit(-1)
-
-    BuildTools.DEFAULT_BUILD_MANAGEMENT_YAML_FILES = buildFiles
     
 def HandleManagement(arguments):
     if len(arguments) == 0:
@@ -50,8 +31,6 @@ def HandleManagement(arguments):
     if '-help' in arguments and len(arguments) == 1:
         print(GetInfoMsg())
         return
-
-    AssertYamlFilesExists()
     
     SwarmTools.LoadEnvironmentVariables(
         arguments, BuildTools.DEFAULT_BUILD_MANAGEMENT_YAML_FILES)

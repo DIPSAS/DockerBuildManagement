@@ -1,4 +1,4 @@
 twine
 wheel
-SwarmManagement>=1.1.39
+SwarmManagement>=1.1.40
 DockerBuildSystem>=1.1.24
