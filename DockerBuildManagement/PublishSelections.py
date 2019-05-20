@@ -40,7 +40,7 @@ def PublishSelection(publishSelection, publishSelectionKey):
     BuildTools.HandleTerminalCommandsSelection(publishSelection)
 
     if BuildTools.FILES_KEY in publishSelection:
-        if BuildTools.TryGetFromDictionary(publishSelection, CONTAINER_ARTIFACT_KEY, True):
+        if SwarmTools.TryGetFromDictionary(publishSelection, CONTAINER_ARTIFACT_KEY, True):
             PublishContainerSelection(publishSelection, publishSelectionKey)
         else:
             PublishArtifactSelection(publishSelection)

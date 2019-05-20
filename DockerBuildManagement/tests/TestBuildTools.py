@@ -17,9 +17,9 @@ class TestBuildTools(unittest.TestCase):
 
     def test_TryGetFromDictionary_success(self):
         selection = {'validKey': 'value'}
-        value = BuildTools.TryGetFromDictionary(selection, 'validKey', 'defaultValue')
+        value = BuildTools.SwarmTools.TryGetFromDictionary(selection, 'validKey', 'defaultValue')
         self.assertEqual(value, 'value')
-        value = BuildTools.TryGetFromDictionary(selection, 'invalidKey', 'defaultValue')
+        value = BuildTools.SwarmTools.TryGetFromDictionary(selection, 'invalidKey', 'defaultValue')
         self.assertEqual(value, 'defaultValue')
 
 

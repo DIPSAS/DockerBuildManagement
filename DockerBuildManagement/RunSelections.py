@@ -43,8 +43,8 @@ def RunSelection(runSelection):
     if BuildTools.FILES_KEY in runSelection:
         DockerComposeTools.DockerComposeUp(
             runSelection[BuildTools.FILES_KEY],
-            BuildTools.TryGetFromDictionary(runSelection, ABORT_ON_CONTAINER_EXIT_KEY, True),
-            BuildTools.TryGetFromDictionary(runSelection, DETACHED_KEY, False))
+            SwarmTools.TryGetFromDictionary(runSelection, ABORT_ON_CONTAINER_EXIT_KEY, True),
+            SwarmTools.TryGetFromDictionary(runSelection, DETACHED_KEY, False))
 
         BuildTools.HandleCopyFromContainer(runSelection)
     

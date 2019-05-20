@@ -25,7 +25,7 @@ def ExportChangelogSelection(changelogSelection):
         return
 
     VersionTools.ExportVersionFromChangelogToEnvironment(
-        changelogSelection[FILE_KEY], BuildTools.TryGetFromDictionary(changelogSelection, ENV_VERSION_KEY, 'VERSION'))
+        changelogSelection[FILE_KEY], SwarmTools.TryGetFromDictionary(changelogSelection, ENV_VERSION_KEY, 'VERSION'))
 
 
 def HandleChangelogSelections(arguments):

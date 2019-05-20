@@ -36,19 +36,12 @@ def HandleTerminalCommandsSelection(selection):
         TerminalTools.ExecuteTerminalCommands(terminalCommands, True)
 
 
-
 def TryChangeToDirectoryAndGetCwd(selection):
     cwd = os.getcwd()
     if DIRECTORY_KEY in selection:
         if len(selection[DIRECTORY_KEY]) > 0:
             os.chdir(selection[DIRECTORY_KEY])
     return cwd
-
-
-def TryGetFromDictionary(dictionary, key, defaultValue):
-    if key in dictionary:
-        return dictionary[key]
-    return defaultValue
 
 
 def HandleCopyFromContainer(dictionary):
@@ -61,4 +54,3 @@ def HandleCopyFromContainer(dictionary):
         if not os.path.exists(hostDest):
             os.makedirs(hostDest)
         DockerImageTools.CopyFromContainerToHost(containerName, containerSrc, hostDest)
-

@@ -48,7 +48,7 @@ def TestSelection(testSelection):
 
         BuildTools.HandleCopyFromContainer(testSelection)
 
-        if BuildTools.TryGetFromDictionary(testSelection, REMOVE_CONTAINERS_KEY, False):
+        if SwarmTools.TryGetFromDictionary(testSelection, REMOVE_CONTAINERS_KEY, False):
             DockerComposeTools.DockerComposeRemove(
                 testSelection[BuildTools.FILES_KEY])
 
