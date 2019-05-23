@@ -2,6 +2,7 @@ from DockerBuildSystem import VersionTools
 from SwarmManagement import SwarmTools
 from DockerBuildManagement import BuildTools
 import sys
+import os
 
 CHANGELOG_KEY = 'changelog'
 FILE_KEY = 'file'
@@ -34,7 +35,12 @@ def HandleChangelogSelections(arguments):
         return
 
     changelogSelection = GetChangelogSelection(arguments)
+    cwd = BuildTools.TryChangeToDirectoryAndGetCwd(changelogSelection)
+
+    BuildTools.HandleTerminalCommandsSelection(changelogSelection)
     ExportChangelogSelection(changelogSelection)
+
+    os.chdir(cwd)
 
 
 if __name__ == "__main__":

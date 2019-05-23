@@ -41,6 +41,9 @@ It is possible to specify a separate yaml file (or multiple) with the `-f` key:
 
 ```yml
 changelog:
+    directory: src
+    cmd:
+        - python ./pythonSnippet.py
     file: CHANGELOG.md
     envKey: VERSION
 
@@ -170,7 +173,8 @@ The `swarm` section helps to deploy service stacks to your local swarm. It reuse
 
 ### General Properties
 - `changelog` -> The `changelog` property parses a [CHANGELOG.md](example/CHANGELOG.md) file and sets an environment variables with current version. It contains following sub-keys:
-    - `file` -> Path to the `CHANGELOG.md` file.
+    - `file` -> Path to the changelog file. The changelog file must be of a format similar to [example/src/CHANGELOG.md](example/src/CHANGELOG.md).
+      - The `cmd` property may be used to trigger a script exposing the `VERSION` environment variable in any preferred way if the changelog standard isn't suitable.
     - `envKey` -> On which environment variable to expose the version value. Default is `VERSION`.
 - `env_files` -> List of `.env` files listing environment variables to expose. By convention, a present `.env` file will automatically be used to expose environment variables. Additionally, any yaml file may contain the `${*}` sequence anywhere in the file. The matching environment variable (`ENV_KEY` of `${ENV_KEY}`) will replace this sequence with the value of the environment variable.
 

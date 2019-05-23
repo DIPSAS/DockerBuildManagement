@@ -1,4 +1,7 @@
 changelog:
+    directory: src
+    cmd:
+        - python ./pythonSnippet.py
     file: CHANGELOG.md
     envKey: VERSION
 
