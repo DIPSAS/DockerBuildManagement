@@ -1,5 +1,6 @@
 from SwarmManagement import SwarmTools, SwarmManager
 from DockerBuildManagement import BuildTools
+from DockerBuildSystem import YamlTools
 import sys
 import os
 
@@ -25,7 +26,7 @@ def GetInfoMsg():
 def GetSwarmSelections(arguments):
     yamlData = SwarmTools.LoadYamlDataFromFiles(
         arguments, BuildTools.DEFAULT_BUILD_MANAGEMENT_YAML_FILES)
-    swarmProperty = SwarmTools.GetProperties(arguments, SWARM_KEY, GetInfoMsg(), yamlData)
+    swarmProperty = YamlTools.GetProperties(SWARM_KEY, yamlData)
     if BuildTools.SELECTIONS_KEY in swarmProperty:
         return swarmProperty[BuildTools.SELECTIONS_KEY]
     return {}

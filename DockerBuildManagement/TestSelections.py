@@ -1,4 +1,4 @@
-from DockerBuildSystem import DockerComposeTools
+from DockerBuildSystem import DockerComposeTools, YamlTools
 from SwarmManagement import SwarmTools
 from DockerBuildManagement import BuildTools
 import sys
@@ -21,7 +21,7 @@ def GetInfoMsg():
 def GetTestSelections(arguments):
     yamlData = SwarmTools.LoadYamlDataFromFiles(
         arguments, BuildTools.DEFAULT_BUILD_MANAGEMENT_YAML_FILES)
-    testProperty = SwarmTools.GetProperties(arguments, TEST_KEY, GetInfoMsg(), yamlData)
+    testProperty = YamlTools.GetProperties(TEST_KEY, yamlData)
     if BuildTools.SELECTIONS_KEY in testProperty:
         return testProperty[BuildTools.SELECTIONS_KEY]
     return {}
@@ -48,7 +48,7 @@ def TestSelection(testSelection):
 
         BuildTools.HandleCopyFromContainer(testSelection)
 
-        if SwarmTools.TryGetFromDictionary(testSelection, REMOVE_CONTAINERS_KEY, False):
+        if YamlTools.TryGetFromDictionary(testSelection, REMOVE_CONTAINERS_KEY, False):
             DockerComposeTools.DockerComposeRemove(
                 testSelection[BuildTools.FILES_KEY])
 

@@ -1,4 +1,4 @@
-from .. import BuildTools
+from DockerBuildManagement import BuildTools
 
 
 TEST_SAMPLE_FOLDER = 'example'

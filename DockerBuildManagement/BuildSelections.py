@@ -1,4 +1,4 @@
-from DockerBuildSystem import DockerComposeTools
+from DockerBuildSystem import DockerComposeTools, YamlTools
 from SwarmManagement import SwarmTools
 from DockerBuildManagement import BuildTools
 import sys
@@ -20,7 +20,7 @@ def GetInfoMsg():
 def GetBuildSelections(arguments):
     yamlData = SwarmTools.LoadYamlDataFromFiles(
         arguments, BuildTools.DEFAULT_BUILD_MANAGEMENT_YAML_FILES)
-    buildProperty = SwarmTools.GetProperties(arguments, BUILD_KEY, GetInfoMsg(), yamlData)
+    buildProperty = YamlTools.GetProperties(BUILD_KEY, yamlData)
     if BuildTools.SELECTIONS_KEY in buildProperty:
         return buildProperty[BuildTools.SELECTIONS_KEY]
     return {}

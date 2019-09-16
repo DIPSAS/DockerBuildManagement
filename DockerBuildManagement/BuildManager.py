@@ -1,5 +1,4 @@
 import sys
-import os.path
 from DockerBuildManagement import ChangelogSelections, BuildSelections, PublishSelections, RunSelections, SwarmSelections, TestSelections, BuildTools
 from SwarmManagement import SwarmTools
 

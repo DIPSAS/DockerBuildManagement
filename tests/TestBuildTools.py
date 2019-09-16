@@ -1,6 +1,7 @@
 import unittest
 import os
-from .. import BuildTools
+from DockerBuildManagement import BuildTools
+from DockerBuildSystem import YamlTools
 
 class TestBuildTools(unittest.TestCase):
 
@@ -17,9 +18,9 @@ class TestBuildTools(unittest.TestCase):
 
     def test_TryGetFromDictionary_success(self):
         selection = {'validKey': 'value'}
-        value = BuildTools.SwarmTools.TryGetFromDictionary(selection, 'validKey', 'defaultValue')
+        value = YamlTools.TryGetFromDictionary(selection, 'validKey', 'defaultValue')
         self.assertEqual(value, 'value')
-        value = BuildTools.SwarmTools.TryGetFromDictionary(selection, 'invalidKey', 'defaultValue')
+        value = YamlTools.TryGetFromDictionary(selection, 'invalidKey', 'defaultValue')
         self.assertEqual(value, 'defaultValue')
 
 

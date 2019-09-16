@@ -1,4 +1,4 @@
-from DockerBuildSystem import DockerComposeTools
+from DockerBuildSystem import DockerComposeTools, YamlTools
 from SwarmManagement import SwarmTools
 from DockerBuildManagement import BuildTools
 import sys
@@ -19,7 +19,7 @@ def GetInfoMsg():
 def GetPublishSelections(arguments):
     yamlData = SwarmTools.LoadYamlDataFromFiles(
         arguments, BuildTools.DEFAULT_BUILD_MANAGEMENT_YAML_FILES)
-    publishProperty = SwarmTools.GetProperties(arguments, PUBLISH_KEY, GetInfoMsg(), yamlData)
+    publishProperty = YamlTools.GetProperties(PUBLISH_KEY, yamlData)
     if BuildTools.SELECTIONS_KEY in publishProperty:
         return publishProperty[BuildTools.SELECTIONS_KEY]
     return {}
@@ -40,7 +40,7 @@ def PublishSelection(publishSelection, publishSelectionKey):
     BuildTools.HandleTerminalCommandsSelection(publishSelection)
 
     if BuildTools.FILES_KEY in publishSelection:
-        if SwarmTools.TryGetFromDictionary(publishSelection, CONTAINER_ARTIFACT_KEY, True):
+        if YamlTools.TryGetFromDictionary(publishSelection, CONTAINER_ARTIFACT_KEY, True):
             PublishContainerSelection(publishSelection, publishSelectionKey)
         else:
             PublishArtifactSelection(publishSelection)

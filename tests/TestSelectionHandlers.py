@@ -1,12 +1,11 @@
 import unittest
 import os
-from . import TestTools
-from .. import BuildTools
-from .. import ChangelogSelections
-from .. import TestSelections
-from .. import BuildSelections
-from .. import RunSelections
-from .. import SwarmSelections
+from tests import TestTools
+from DockerBuildManagement import ChangelogSelections
+from DockerBuildManagement import TestSelections
+from DockerBuildManagement import BuildSelections
+from DockerBuildManagement import RunSelections
+from DockerBuildManagement import SwarmSelections
 
 class TestSelectionHandlers(unittest.TestCase):
 

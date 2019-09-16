@@ -1,4 +1,4 @@
-from DockerBuildSystem import VersionTools
+from DockerBuildSystem import VersionTools, YamlTools
 from SwarmManagement import SwarmTools
 from DockerBuildManagement import BuildTools
 import sys
@@ -18,7 +18,7 @@ def GetInfoMsg():
 def GetChangelogSelection(arguments):
     yamlData = SwarmTools.LoadYamlDataFromFiles(
         arguments, BuildTools.DEFAULT_BUILD_MANAGEMENT_YAML_FILES)
-    return SwarmTools.GetProperties(arguments, CHANGELOG_KEY, GetInfoMsg(), yamlData)
+    return YamlTools.GetProperties(CHANGELOG_KEY, yamlData)
 
 
 def ExportChangelogSelection(changelogSelection):
@@ -26,7 +26,7 @@ def ExportChangelogSelection(changelogSelection):
         return
 
     VersionTools.ExportVersionFromChangelogToEnvironment(
-        changelogSelection[FILE_KEY], SwarmTools.TryGetFromDictionary(changelogSelection, ENV_VERSION_KEY, 'VERSION'))
+        changelogSelection[FILE_KEY], YamlTools.TryGetFromDictionary(changelogSelection, ENV_VERSION_KEY, 'VERSION'))
 
 
 def HandleChangelogSelections(arguments):
