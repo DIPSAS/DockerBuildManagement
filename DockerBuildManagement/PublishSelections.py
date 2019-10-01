@@ -55,7 +55,6 @@ def PublishContainerSelection(publishSelection, publishSelectionKey):
     publishComposeFile = 'docker-compose.publish.' + publishSelectionKey + '.yml'
     DockerComposeTools.MergeComposeFiles(composeFiles, publishComposeFile)
     DockerComposeTools.PublishDockerImages(publishComposeFile)
-    DockerComposeTools.AddDigestsToImageTags([publishComposeFile], publishComposeFile)
     if BuildTools.ADDITIONAL_TAG_KEY in publishSelection:
         DockerComposeTools.PublishDockerImagesWithNewTag(publishComposeFile, publishSelection[BuildTools.ADDITIONAL_TAG_KEY])
     if BuildTools.ADDITIONAL_TAGS_KEY in publishSelection:
