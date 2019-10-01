@@ -81,6 +81,7 @@ build:
                 - beta
                 - zeta
             saveImages: ../output
+            composeFileWithDigests: docker-compose.digest.pythonSnippet.yml
             files:
                 - docker-compose.pythonSnippet.yml
 
@@ -155,6 +156,7 @@ The `build` section builds all docker images as described by the `docker-compose
 - `additionalTag: <additional_image_tag>` -> Include an additional tag to all built docker images.
 - `additionalTags: <list_of_additional_image_tags>` -> Include a list of additional tags to all built docker images.
 - `saveImages: <output_folder>` -> Save all built docker images from the compose file as tar files. The files will be saved in the given output folder.
+- `composeFileWithDigests: <docker-compose.with_digests.yml>` -> Get an updated version of the compose files with the unique digest included in the image names. An unique digest is generated for each published image and should always be used in production.
 
 ### Test Features
 The `test` section runs all services listed in the `docker-compose.yml` files, and detects if either of the services exited with a non-zero exit code due to an error.

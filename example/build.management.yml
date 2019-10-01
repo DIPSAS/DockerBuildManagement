@@ -39,6 +39,7 @@ build:
                 - beta
                 - zeta
             saveImages: ../output
+            composeFileWithDigests: docker-compose.digest.pythonSnippet.yml
             files:
                 - docker-compose.pythonSnippet.yml
 

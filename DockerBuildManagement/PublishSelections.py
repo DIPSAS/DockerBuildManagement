@@ -1,4 +1,4 @@
-from DockerBuildSystem import DockerComposeTools, YamlTools, TerminalTools
+from DockerBuildSystem import DockerComposeTools, YamlTools
 from SwarmManagement import SwarmTools
 from DockerBuildManagement import BuildTools
 import sys
@@ -62,9 +62,7 @@ def PublishContainerSelection(publishSelection, publishSelectionKey):
             DockerComposeTools.PublishDockerImagesWithNewTag(publishComposeFile, tag)
     if BuildTools.COMPOSE_FILE_WITH_DIGESTS_KEY in publishSelection:
         composeFileWithDigests = publishSelection[BuildTools.COMPOSE_FILE_WITH_DIGESTS_KEY]
-        if os.path.isfile('.env'):
-            TerminalTools.LoadEnvironmentVariables('.env')
-        DockerComposeTools.AddDigestsToImageTags(composeFiles, composeFileWithDigests)
+        DockerComposeTools.AddDigestsToImageTags([publishComposeFile], composeFileWithDigests)
 
 
 

@@ -53,6 +53,10 @@ def BuildSelection(buildSelection, selectionToBuild):
         if SAVE_IMAGES_KEY in buildSelection:
             outputFolder = buildSelection[SAVE_IMAGES_KEY]
             DockerComposeTools.SaveImages(buildComposeFile, outputFolder)
+
+        if BuildTools.COMPOSE_FILE_WITH_DIGESTS_KEY in buildSelection:
+            composeFileWithDigests = buildSelection[BuildTools.COMPOSE_FILE_WITH_DIGESTS_KEY]
+            DockerComposeTools.AddDigestsToImageTags([buildComposeFile], composeFileWithDigests)
             
     os.chdir(cwd)
 
