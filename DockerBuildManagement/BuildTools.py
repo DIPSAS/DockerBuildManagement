@@ -8,6 +8,7 @@ FILES_KEY = 'files'
 DIRECTORY_KEY = 'directory'
 ADDITIONAL_TAG_KEY = 'additionalTag'
 ADDITIONAL_TAGS_KEY = 'additionalTags'
+COMPOSE_FILE_WITH_DIGESTS_KEY = 'composeFileWithDigests'
 
 COPY_FROM_CONTAINER_TAG = 'copyFromContainer'
 COPY_CONTAINER_SRC_TAG = 'containerSrc'

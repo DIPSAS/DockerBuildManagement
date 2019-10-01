@@ -64,6 +64,7 @@ publish:
             additionalTags:
                 - beta
                 - zeta
+            composeFileWithDigests: docker-compose.digest.pythonSnippet.yml
             files:
                 - docker-compose.pythonSnippet.yml
         secondSelection:

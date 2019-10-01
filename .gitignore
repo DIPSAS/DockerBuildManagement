@@ -20,4 +20,5 @@ example/output/
 docker-compose.build.*.yml
 docker-compose.publish.*.yml
 docker-compose.run.*.yml
+docker-compose.digest.*.yml
 venv/

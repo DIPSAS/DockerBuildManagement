@@ -106,6 +106,7 @@ publish:
             additionalTags:
                 - beta
                 - zeta
+            composeFileWithDigests: docker-compose.digest.pythonSnippet.yml
             files:
                 - docker-compose.pythonSnippet.yml
         secondSelection:
@@ -165,6 +166,7 @@ The `publish` section publishes all docker images listed in the `docker-compose.
 - `additionalTag: <additional_image_tag>` -> Include an additional tag to publish with the docker images.
 - `additionalTags: <list_of_additional_image_tags>` -> Include a list of additional tags to publish with the docker images.
 - `containerArtifact: true/false` -> Sometimes the solution does not publish docker images, but just something else such as nugets, pypi or gem packages. With this property set to `true`, you can make a docker container do the work of publishing the artifact. Default is `false`.
+- `composeFileWithDigests: <docker-compose.with_digests.yml>` -> Get an updated version of the compose files with the unique digest included in the image names. An unique digest is generated for each published image and should always be used in production.
 
 ### Swarm Features
 The `swarm` section helps to deploy service stacks to your local swarm. It reuses the [SwarmManagement](https://github.com/DIPSAS/SwarmManagement) deployment tool to deploy and remove services to and from the Swarm.
