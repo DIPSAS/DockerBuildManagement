@@ -1,4 +1,4 @@
-from DockerBuildSystem import DockerComposeTools, YamlTools
+from DockerBuildSystem import DockerComposeTools, YamlTools, TerminalTools
 from SwarmManagement import SwarmTools
 from DockerBuildManagement import BuildTools
 import sys
@@ -40,7 +40,7 @@ def TestSelections(selectionsToTest, testSelections):
 def TestSelection(testSelection):
     cwd = BuildTools.TryChangeToDirectoryAndGetCwd(testSelection)
     BuildTools.HandleTerminalCommandsSelection(testSelection)
-    BuildTools.LoadDefaultEnvironmentVariablesFile()
+    TerminalTools.LoadDefaultEnvironmentVariablesFile()
 
     if BuildTools.FILES_KEY in testSelection:
         DockerComposeTools.ExecuteComposeTests(

@@ -1,6 +1,6 @@
 from SwarmManagement import SwarmTools, SwarmManager
 from DockerBuildManagement import BuildTools
-from DockerBuildSystem import YamlTools
+from DockerBuildSystem import YamlTools, TerminalTools
 import sys
 import os
 
@@ -45,7 +45,7 @@ def DeploySwarmSelections(swarmSelectionsToDeploy, swarmSelections, prefix):
 def DeploySwarmSelection(swarmSelection, prefix):
     cwd = BuildTools.TryChangeToDirectoryAndGetCwd(swarmSelection)
     BuildTools.HandleTerminalCommandsSelection(swarmSelection)
-    BuildTools.LoadDefaultEnvironmentVariablesFile()
+    TerminalTools.LoadDefaultEnvironmentVariablesFile()
     SwarmManager.HandleManagement(
         [prefix] + BuildSwarmManagementFilesRow(swarmSelection) + BuildSwarmManagementPropertiesRow(swarmSelection))
     os.chdir(cwd)

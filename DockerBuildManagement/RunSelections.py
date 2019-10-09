@@ -1,4 +1,4 @@
-from DockerBuildSystem import DockerComposeTools, YamlTools
+from DockerBuildSystem import DockerComposeTools, YamlTools, TerminalTools
 from SwarmManagement import SwarmTools
 from DockerBuildManagement import BuildTools
 import sys
@@ -39,7 +39,7 @@ def RunSelections(selectionsToRun, runSelections):
 def RunSelection(runSelection):
     cwd = BuildTools.TryChangeToDirectoryAndGetCwd(runSelection)
     BuildTools.HandleTerminalCommandsSelection(runSelection)
-    BuildTools.LoadDefaultEnvironmentVariablesFile()
+    TerminalTools.LoadDefaultEnvironmentVariablesFile()
 
     if BuildTools.FILES_KEY in runSelection:
         DockerComposeTools.DockerComposeUp(

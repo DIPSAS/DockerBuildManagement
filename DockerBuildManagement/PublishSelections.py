@@ -1,4 +1,4 @@
-from DockerBuildSystem import DockerComposeTools, YamlTools
+from DockerBuildSystem import DockerComposeTools, YamlTools, TerminalTools
 from SwarmManagement import SwarmTools
 from DockerBuildManagement import BuildTools
 import sys
@@ -38,7 +38,7 @@ def PublishSelections(selectionsToPublish, publishSelections):
 def PublishSelection(publishSelection, publishSelectionKey):
     cwd = BuildTools.TryChangeToDirectoryAndGetCwd(publishSelection)
     BuildTools.HandleTerminalCommandsSelection(publishSelection)
-    BuildTools.LoadDefaultEnvironmentVariablesFile()
+    TerminalTools.LoadDefaultEnvironmentVariablesFile()
 
     if BuildTools.FILES_KEY in publishSelection:
         if YamlTools.TryGetFromDictionary(publishSelection, CONTAINER_ARTIFACT_KEY, True):

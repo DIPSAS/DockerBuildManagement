@@ -1,4 +1,4 @@
-from DockerBuildSystem import DockerComposeTools, YamlTools
+from DockerBuildSystem import DockerComposeTools, YamlTools, TerminalTools
 from SwarmManagement import SwarmTools
 from DockerBuildManagement import BuildTools
 import sys
@@ -39,7 +39,7 @@ def BuildSelections(selectionsToBuild, buildSelections):
 def BuildSelection(buildSelection, selectionToBuild):
     cwd = BuildTools.TryChangeToDirectoryAndGetCwd(buildSelection)
     BuildTools.HandleTerminalCommandsSelection(buildSelection)
-    BuildTools.LoadDefaultEnvironmentVariablesFile()
+    TerminalTools.LoadDefaultEnvironmentVariablesFile()
 
     if BuildTools.FILES_KEY in buildSelection:
         composeFiles = buildSelection[BuildTools.FILES_KEY]
