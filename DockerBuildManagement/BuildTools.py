@@ -45,6 +45,11 @@ def TryChangeToDirectoryAndGetCwd(selection):
     return cwd
 
 
+def LoadDefaultEnvironmentVariablesFile(defaultEnvFile = '.env'):
+    if os.path.isfile(defaultEnvFile):
+        TerminalTools.LoadEnvironmentVariables(defaultEnvFile)
+
+
 def HandleCopyFromContainer(dictionary):
     if not(COPY_FROM_CONTAINER_TAG in dictionary):
         return

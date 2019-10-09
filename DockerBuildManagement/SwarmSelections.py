@@ -45,6 +45,7 @@ def DeploySwarmSelections(swarmSelectionsToDeploy, swarmSelections, prefix):
 def DeploySwarmSelection(swarmSelection, prefix):
     cwd = BuildTools.TryChangeToDirectoryAndGetCwd(swarmSelection)
     BuildTools.HandleTerminalCommandsSelection(swarmSelection)
+    BuildTools.LoadDefaultEnvironmentVariablesFile()
     SwarmManager.HandleManagement(
         [prefix] + BuildSwarmManagementFilesRow(swarmSelection) + BuildSwarmManagementPropertiesRow(swarmSelection))
     os.chdir(cwd)

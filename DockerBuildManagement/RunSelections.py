@@ -39,6 +39,7 @@ def RunSelections(selectionsToRun, runSelections):
 def RunSelection(runSelection):
     cwd = BuildTools.TryChangeToDirectoryAndGetCwd(runSelection)
     BuildTools.HandleTerminalCommandsSelection(runSelection)
+    BuildTools.LoadDefaultEnvironmentVariablesFile()
 
     if BuildTools.FILES_KEY in runSelection:
         DockerComposeTools.DockerComposeUp(

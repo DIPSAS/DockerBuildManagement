@@ -40,6 +40,7 @@ def TestSelections(selectionsToTest, testSelections):
 def TestSelection(testSelection):
     cwd = BuildTools.TryChangeToDirectoryAndGetCwd(testSelection)
     BuildTools.HandleTerminalCommandsSelection(testSelection)
+    BuildTools.LoadDefaultEnvironmentVariablesFile()
 
     if BuildTools.FILES_KEY in testSelection:
         DockerComposeTools.ExecuteComposeTests(
