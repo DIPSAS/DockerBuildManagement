@@ -56,7 +56,7 @@ def BuildSelection(buildSelection, selectionToBuild):
 
         if BuildTools.COMPOSE_FILE_WITH_DIGESTS_KEY in buildSelection:
             composeFileWithDigests = buildSelection[BuildTools.COMPOSE_FILE_WITH_DIGESTS_KEY]
-            DockerComposeTools.AddDigestsToImageTags([buildComposeFile], composeFileWithDigests)
+            DockerComposeTools.AddDigestsToImageTags(composeFiles, composeFileWithDigests)
             
     os.chdir(cwd)
 
