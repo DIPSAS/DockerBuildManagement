@@ -63,7 +63,7 @@ def PublishContainerSelection(publishSelection, publishSelectionKey):
             DockerComposeTools.PublishDockerImagesWithNewTag(publishComposeFile, tag)
     if BuildTools.COMPOSE_FILE_WITH_DIGESTS_KEY in publishSelection:
         composeFileWithDigests = publishSelection[BuildTools.COMPOSE_FILE_WITH_DIGESTS_KEY]
-        DockerComposeTools.AddDigestsToImageTags(composeFiles, composeFileWithDigests)
+        BuildTools.GenerateComposeFileWithDigests(composeFiles, composeFileWithDigests)
 
 
 

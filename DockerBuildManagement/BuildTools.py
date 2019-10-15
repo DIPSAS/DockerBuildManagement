@@ -1,5 +1,5 @@
 from SwarmManagement import SwarmTools
-from DockerBuildSystem import DockerImageTools, TerminalTools
+from DockerBuildSystem import DockerImageTools, TerminalTools, YamlTools, DockerComposeTools
 import os
 
 COMMAND_KEY = 'cmd'
@@ -55,3 +55,10 @@ def HandleCopyFromContainer(dictionary):
         if not os.path.exists(hostDest):
             os.makedirs(hostDest)
         DockerImageTools.CopyFromContainerToHost(containerName, containerSrc, hostDest)
+
+
+def GenerateComposeFileWithDigests(composeFiles, outputComposeFile):
+    TerminalTools.LoadDefaultEnvironmentVariablesFile()
+    yamlData = YamlTools.GetYamlData(composeFiles, replaceEnvironmentVariablesMatches=False)
+    DockerComposeTools.AddDigestsToImageTags(yamlData)
+    YamlTools.DumpYamlDataToFile(yamlData, outputComposeFile)

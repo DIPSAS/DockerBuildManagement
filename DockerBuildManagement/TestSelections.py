@@ -30,30 +30,41 @@ def GetTestSelections(arguments):
 def TestSelections(selectionsToTest, testSelections):
     if len(selectionsToTest) == 0:
         for testSelection in testSelections:
-            TestSelection(testSelections[testSelection])
+            TestSelection(testSelections[testSelection], testSelection)
     else:
         for selectionToTest in selectionsToTest:
             if selectionToTest in testSelections:
-                TestSelection(testSelections[selectionToTest])
+                TestSelection(testSelections[selectionToTest], selectionToTest)
 
 
-def TestSelection(testSelection):
+def TestSelection(testSelection, testSelectionKey):
     cwd = BuildTools.TryChangeToDirectoryAndGetCwd(testSelection)
     BuildTools.HandleTerminalCommandsSelection(testSelection)
     TerminalTools.LoadDefaultEnvironmentVariablesFile()
 
     if BuildTools.FILES_KEY in testSelection:
-        DockerComposeTools.ExecuteComposeTests(
-            testSelection[BuildTools.FILES_KEY], 
-            testSelection[CONTAINER_NAMES_KEY], False)
+        testComposeFile = 'docker-compose.test.' + testSelectionKey + '.yml'
+        composeFiles = testSelection[BuildTools.FILES_KEY]
+        containerNames = MergeAndPopulateWithContainerNames(composeFiles, testComposeFile)
+        if CONTAINER_NAMES_KEY in testSelection:
+            containerNames = testSelection[CONTAINER_NAMES_KEY]
 
+        DockerComposeTools.ExecuteComposeTests([testComposeFile], containerNames, False)
         BuildTools.HandleCopyFromContainer(testSelection)
 
         if YamlTools.TryGetFromDictionary(testSelection, REMOVE_CONTAINERS_KEY, False):
-            DockerComposeTools.DockerComposeRemove(
-                testSelection[BuildTools.FILES_KEY])
+            DockerComposeTools.DockerComposeRemove([testComposeFile])
 
     os.chdir(cwd)
+
+
+def MergeAndPopulateWithContainerNames(composeFiles, testComposeFile):
+    DockerComposeTools.MergeComposeFiles(composeFiles, testComposeFile)
+    yamlData = YamlTools.GetYamlData([testComposeFile])
+    DockerComposeTools.AddContainerNames(yamlData)
+    YamlTools.DumpYamlDataToFile(yamlData, testComposeFile)
+    containerNames = DockerComposeTools.GetContainerNames(yamlData)
+    return containerNames
 
 
 def HandleTestSelections(arguments):
