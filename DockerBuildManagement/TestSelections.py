@@ -37,21 +37,25 @@ def TestSelections(selectionsToTest, testSelections):
                 TestSelection(testSelections[selectionToTest], selectionToTest)
 
 
-def TestSelection(testSelection, testSelectionKey):
+def TestSelection(testSelection, selectionToTest):
     cwd = BuildTools.TryChangeToDirectoryAndGetCwd(testSelection)
     BuildTools.HandleTerminalCommandsSelection(testSelection)
     TerminalTools.LoadDefaultEnvironmentVariablesFile()
 
     if BuildTools.FILES_KEY in testSelection:
-        testComposeFile = 'docker-compose.test.' + testSelectionKey + '.yml'
+        testComposeFile = BuildTools.GetAvailableComposeFilename('test', selectionToTest)
         composeFiles = testSelection[BuildTools.FILES_KEY]
         containerNames = MergeAndPopulateWithContainerNames(composeFiles, testComposeFile)
         if CONTAINER_NAMES_KEY in testSelection:
             containerNames = testSelection[CONTAINER_NAMES_KEY]
 
-        DockerComposeTools.ExecuteComposeTests([testComposeFile], containerNames, False)
-        BuildTools.HandleCopyFromContainer(testSelection)
+        try:
+            DockerComposeTools.ExecuteComposeTests([testComposeFile], containerNames, False)
+        except:
+            BuildTools.RemoveComposeFileIfNotPreserved(testComposeFile, testSelection)
+            raise
 
+        BuildTools.HandleCopyFromContainer(testSelection)
         if YamlTools.TryGetFromDictionary(testSelection, REMOVE_CONTAINERS_KEY, False):
             DockerComposeTools.DockerComposeRemove([testComposeFile])
 

@@ -1,6 +1,7 @@
 from SwarmManagement import SwarmTools
 from DockerBuildSystem import DockerImageTools, TerminalTools, YamlTools, DockerComposeTools
 import os
+import random
 
 COMMAND_KEY = 'cmd'
 SELECTIONS_KEY = 'selections'
@@ -71,3 +72,11 @@ def RemoveComposeFileIfNotPreserved(composeFile, selection):
         preserveComposeFile = bool(selection[PRESERVE_MERGED_COMPOSE_FILE])
     if not(preserveComposeFile):
         os.remove(composeFile)
+
+def GetAvailableComposeFilename(selectionTag, defaultTag):
+    composeFile = 'docker-compose.{0}.{1}.yml'.format(selectionTag, defaultTag)
+    if os.path.exists(composeFile):
+        random.seed()
+        randId = str(random.randint(0, 100))
+        composeFile = 'docker-compose.{0}.{1}.{2}.yml'.format(selectionTag, defaultTag, randId)
+    return composeFile
