@@ -58,6 +58,8 @@ def BuildSelection(buildSelection, selectionToBuild):
         if BuildTools.COMPOSE_FILE_WITH_DIGESTS_KEY in buildSelection:
             composeFileWithDigests = buildSelection[BuildTools.COMPOSE_FILE_WITH_DIGESTS_KEY]
             BuildTools.GenerateComposeFileWithDigests(composeFiles, composeFileWithDigests)
+
+        BuildTools.RemoveComposeFileIfNotPreserved(buildComposeFile, buildSelection)
             
     os.chdir(cwd)
 

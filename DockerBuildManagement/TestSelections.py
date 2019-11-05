@@ -55,6 +55,8 @@ def TestSelection(testSelection, testSelectionKey):
         if YamlTools.TryGetFromDictionary(testSelection, REMOVE_CONTAINERS_KEY, False):
             DockerComposeTools.DockerComposeRemove([testComposeFile])
 
+        BuildTools.RemoveComposeFileIfNotPreserved(testComposeFile, testSelection)
+
     os.chdir(cwd)
 
 

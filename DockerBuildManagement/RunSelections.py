@@ -29,25 +29,29 @@ def GetRunSelections(arguments):
 def RunSelections(selectionsToRun, runSelections):
     if len(selectionsToRun) == 0:
         for runSelection in runSelections:
-            RunSelection(runSelections[runSelection])
+            RunSelection(runSelections[runSelection], runSelection)
     else:
         for selectionToRun in selectionsToRun:
             if selectionToRun in runSelections:
-                RunSelection(runSelections[selectionToRun])
+                RunSelection(runSelections[selectionToRun], selectionToRun)
 
 
-def RunSelection(runSelection):
+def RunSelection(runSelection, selectionsToRun):
     cwd = BuildTools.TryChangeToDirectoryAndGetCwd(runSelection)
     BuildTools.HandleTerminalCommandsSelection(runSelection)
     TerminalTools.LoadDefaultEnvironmentVariablesFile()
 
     if BuildTools.FILES_KEY in runSelection:
+        runComposeFile = 'docker-compose.run.' + selectionsToRun + '.yml'
+        composeFiles = runSelection[BuildTools.FILES_KEY]
+        DockerComposeTools.MergeComposeFiles(composeFiles, runComposeFile)
         DockerComposeTools.DockerComposeUp(
-            runSelection[BuildTools.FILES_KEY],
+            [runComposeFile],
             YamlTools.TryGetFromDictionary(runSelection, ABORT_ON_CONTAINER_EXIT_KEY, True),
             YamlTools.TryGetFromDictionary(runSelection, DETACHED_KEY, False))
 
         BuildTools.HandleCopyFromContainer(runSelection)
+        BuildTools.RemoveComposeFileIfNotPreserved(runComposeFile, runSelection)
     
     os.chdir(cwd)
 

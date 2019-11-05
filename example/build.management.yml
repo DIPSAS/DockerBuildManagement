@@ -20,6 +20,7 @@ run:
                 - python ./pythonSnippet.py
             abortOnContainerExit: true
             detached: false
+            preserveMergedComposeFile: false
             files:
                 - docker-compose.pythonSnippet.yml
                 - docker-compose.pythonSnippet.overriden.yml
@@ -40,6 +41,7 @@ build:
                 - zeta
             saveImages: ../output
             composeFileWithDigests: docker-compose.digest.pythonSnippet.yml
+            preserveMergedComposeFile: false
             files:
                 - docker-compose.pythonSnippet.yml
 
@@ -52,6 +54,7 @@ test:
             removeContainers: true
             containerNames:
                 - pythonSnippet
+            preserveMergedComposeFile: false
             files:
                 - docker-compose.pythonSnippet.yml
 
@@ -66,6 +69,7 @@ publish:
                 - beta
                 - zeta
             composeFileWithDigests: docker-compose.digest.pythonSnippet.yml
+            preserveMergedComposeFile: false
             files:
                 - docker-compose.pythonSnippet.yml
         secondSelection:

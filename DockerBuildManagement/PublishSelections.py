@@ -65,6 +65,8 @@ def PublishContainerSelection(publishSelection, publishSelectionKey):
         composeFileWithDigests = publishSelection[BuildTools.COMPOSE_FILE_WITH_DIGESTS_KEY]
         BuildTools.GenerateComposeFileWithDigests(composeFiles, composeFileWithDigests)
 
+    BuildTools.RemoveComposeFileIfNotPreserved(publishComposeFile, publishSelection)
+
 
 
 def PublishArtifactSelection(publishSelection):

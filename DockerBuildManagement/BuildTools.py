@@ -9,6 +9,7 @@ DIRECTORY_KEY = 'directory'
 ADDITIONAL_TAG_KEY = 'additionalTag'
 ADDITIONAL_TAGS_KEY = 'additionalTags'
 COMPOSE_FILE_WITH_DIGESTS_KEY = 'composeFileWithDigests'
+PRESERVE_MERGED_COMPOSE_FILE = 'preserveMergedComposeFile'
 
 COPY_FROM_CONTAINER_TAG = 'copyFromContainer'
 COPY_CONTAINER_SRC_TAG = 'containerSrc'
@@ -62,3 +63,11 @@ def GenerateComposeFileWithDigests(composeFiles, outputComposeFile):
     yamlData = YamlTools.GetYamlData(composeFiles, replaceEnvironmentVariablesMatches=False)
     DockerComposeTools.AddDigestsToImageTags(yamlData)
     YamlTools.DumpYamlDataToFile(yamlData, outputComposeFile)
+
+
+def RemoveComposeFileIfNotPreserved(composeFile, selection):
+    preserveComposeFile = False
+    if PRESERVE_MERGED_COMPOSE_FILE in selection:
+        preserveComposeFile = bool(selection[PRESERVE_MERGED_COMPOSE_FILE])
+    if not(preserveComposeFile):
+        os.remove(composeFile)
