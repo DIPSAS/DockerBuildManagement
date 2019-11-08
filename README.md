@@ -162,6 +162,7 @@ The `build` section builds all docker images as described by the `docker-compose
 - `additionalTags: <list_of_additional_image_tags>` -> Include a list of additional tags to all built docker images.
 - `saveImages: <output_folder>` -> Save all built docker images from the compose file as tar files. The files will be saved in the given output folder.
 - `composeFileWithDigests: <docker-compose.with_digests.yml>` -> Get an updated version of the compose files with the unique digest included in the image names. An unique digest is generated for each published image and should always be used in production.
+  - Note! The image digest is produced by docker only when the image is published to a remote repository, meaning the image must exist on a remote repository to have the image tag replaced with the image digest.
 
 ### Test Features
 The `test` section runs all services listed in the `docker-compose.yml` files, and detects if either of the services exited with a non-zero exit code due to an error.
