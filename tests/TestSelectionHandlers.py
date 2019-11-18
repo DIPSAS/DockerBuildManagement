@@ -52,5 +52,16 @@ class TestSelectionHandlers(unittest.TestCase):
         os.chdir(cwd)
         print('DONE EXECUTING SWARM SELECTION TEST')
 
+    def test_f_changelog(self):
+        print('EXECUTING CHANGELOG TEST WITH MAJOR MINOR VERSION')
+        cwd = TestTools.ChangeToSampleFolderAndGetCwd()
+        arguments = ['-f', 'build2.management.yml']
+        ChangelogSelections.HandleChangelogSelections(arguments)
+        self.assertEqual(os.environ['VERSION'], '1.0.0')
+        self.assertEqual(os.environ['VERSIONMAJOR'], '1')
+        self.assertEqual(os.environ['VERSIONMINOR'], '0')
+        os.chdir(cwd)
+        print('DONE EXECUTING CHANGELOG TEST WITH MAJOR MINOR VERSION')
+
 if __name__ == '__main__':
     unittest.main()
