@@ -4,6 +4,8 @@ changelog:
         - python ./pythonSnippet.py
     file: CHANGELOG.md
     envKey: VERSION
+    envMajorVersionKey: VERSIONMAJOR
+    envMinorVersionKey: VERSIONMINOR
 
 env_files: 
     - environment.env
