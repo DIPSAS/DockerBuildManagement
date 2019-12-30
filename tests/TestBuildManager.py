@@ -32,6 +32,7 @@ class TestBuildManager(unittest.TestCase):
         while i < len(arguments):
             actionArgs, newIndex = BuildManager.GetPositionalActionArguments(arguments, i)
             if i == 0:
+                self.assertTrue(len(actionArgs) == 3)
                 self.assertTrue('-swarm' in actionArgs and '-start' in actionArgs and 'selection1' in actionArgs)
                 self.assertFalse('-stop' in actionArgs or '-build' in actionArgs or 'selection2' in actionArgs or 'selection3' in actionArgs)
             if i == 1:

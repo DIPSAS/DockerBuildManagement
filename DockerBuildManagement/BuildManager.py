@@ -34,10 +34,9 @@ def GetPositionalActionArguments(arguments, index):
         actionArgs.append(arguments[index + 1])
         newIndex += 1
 
-    selections = []
-    for actionArg in actionArgs:
-        selections += SwarmTools.GetArgumentValues(arguments[index:], actionArg)
-    actionArgs += selections
+    if len(actionArgs) > 0:
+        selections = SwarmTools.GetArgumentValues(arguments[index:], actionArgs[-1])
+        actionArgs += selections
 
     return actionArgs, newIndex
     
