@@ -20,6 +20,26 @@ def GetInfoMsg():
     infoMsg += BuildTools.GetInfoMsg() + "\r\n\r\n"
     infoMsg += "Add '-help' to arguments to print this info again.\r\n\r\n"
     return infoMsg
+
+
+def GetPositionalActionArguments(arguments, index):
+    actionArgs = []
+    newIndex = index + 1
+    if arguments[index].startswith('-'):
+        actionArgs.append(arguments[index])
+
+    if SwarmSelections.CheckSwarmInArguments(actionArgs) \
+            and index + 1 < len(arguments) \
+            and SwarmSelections.CheckSwarmCommandInArguments([arguments[index + 1]]):
+        actionArgs.append(arguments[index + 1])
+        newIndex += 1
+
+    selections = []
+    for actionArg in actionArgs:
+        selections += SwarmTools.GetArgumentValues(arguments[index:], actionArg)
+    actionArgs += selections
+
+    return actionArgs, newIndex
     
     
 def HandleManagement(arguments):
@@ -36,11 +56,16 @@ def HandleManagement(arguments):
     SwarmTools.HandleDumpYamlData(
         arguments, BuildTools.DEFAULT_BUILD_MANAGEMENT_YAML_FILES)
     ChangelogSelections.HandleChangelogSelections(arguments)
-    SwarmSelections.HandleSwarmSelections(arguments)
-    BuildSelections.HandleBuildSelections(arguments)
-    TestSelections.HandleTestSelections(arguments)
-    RunSelections.HandleRunSelections(arguments)
-    PublishSelections.HandlePublishSelections(arguments)
+
+    index = 0
+    while index < len(arguments):
+        actionArgs, index = GetPositionalActionArguments(arguments, index)
+        SwarmSelections.HandleSwarmSelections(actionArgs)
+        BuildSelections.HandleBuildSelections(actionArgs)
+        TestSelections.HandleTestSelections(actionArgs)
+        RunSelections.HandleRunSelections(actionArgs)
+        PublishSelections.HandlePublishSelections(actionArgs)
+
 
 if __name__ == "__main__":
     arguments = sys.argv[1:]

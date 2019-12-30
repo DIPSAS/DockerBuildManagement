@@ -5,7 +5,7 @@ from DockerBuildSystem import YamlTools
 
 class TestBuildTools(unittest.TestCase):
 
-    def test_getInforMsg_success(self):
+    def test_getInfoMsg_success(self):
         self.assertIsNotNone(BuildTools.GetInfoMsg())
 
     def test_TryChangeToDirectoryAndGetCwd_success(self):
