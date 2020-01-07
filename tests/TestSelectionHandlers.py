@@ -6,6 +6,7 @@ from DockerBuildManagement import TestSelections
 from DockerBuildManagement import BuildSelections
 from DockerBuildManagement import RunSelections
 from DockerBuildManagement import SwarmSelections
+from DockerBuildManagement import PromoteSelections
 
 class TestSelectionHandlers(unittest.TestCase):
 
@@ -53,6 +54,14 @@ class TestSelectionHandlers(unittest.TestCase):
         SwarmSelections.HandleSwarmSelections(arguments)
         os.chdir(cwd)
         print('DONE EXECUTING SWARM SELECTION TEST')
+
+    def test_f_promote(self):
+        print('EXECUTING PROMOTE SELECTION TEST')
+        cwd = TestTools.ChangeToSampleFolderAndGetCwd()
+        arguments = ['-promote']
+        PromoteSelections.HandlePromoteSelections(arguments)
+        os.chdir(cwd)
+        print('DONE EXECUTING PROMOTE SELECTION TEST')
 
 if __name__ == '__main__':
     unittest.main()

@@ -15,13 +15,14 @@ The application makes it easy to manage a build system based on Docker by config
 
 ## Example
 
-Either of the sections (`run`, `build`, `test`, `publish`) in the yaml file is triggered with the following cli commands:
+Either of the sections (`run`, `build`, `test`, `publish`, `promote`) in the yaml file is triggered with the following cli commands:
 - `dbm -run`
 - `dbm -build`
 - `dbm -test`
 - `dbm -publish`
+- `dbm -promote`
 
-Each of the command sections (`run`, `build`, `test`, `publish`) includes context sections, each defined by a suitable key describing that section. Each of the context sections are executed in sequence from top to bottom by default, or you may specify the sections to execute by adding the section keys to the command line:
+Each of the command sections (`run`, `build`, `test`, `publish`, `promote`) includes context sections, each defined by a suitable key describing that section. Each of the context sections are executed in sequence from top to bottom by default, or you may specify the sections to execute by adding the section keys to the command line:
 - `dbm -run secondSelection`
 
 It is also possible to execute multiple command sections in the same command line:
@@ -178,6 +179,22 @@ The `publish` section publishes all docker images listed in the `docker-compose.
 - `containerArtifact: true/false` -> Sometimes the solution does not publish docker images, but just something else such as nugets, pypi or gem packages. With this property set to `true`, you can make a docker container do the work of publishing the artifact. Default is `false`.
 - `composeFileWithDigests: <docker-compose.with_digests.yml>` -> Get an updated version of the compose files with the unique digest included in the image names. An unique digest is generated for each published image and should always be used in production.
 
+### Promote Features
+The `promote`section promotes docker images listed in the `images`property. Only image promotion via artifactory API is supported at this time.
+Options:
+- `images: <list_of_image_names>` -> List of images to be promoted
+- `sourceTargetTags: <list_of_sourcetarget_tags>` -> List of source and corresponding target tags on the format  
+  `- sourceTag: latest    
+     targetTag: latest` This promotes an image with a given sourceTag from one feed to another and tags it with the targetTag.
+- `promoteSourceUri: https://uri-to-artifactory-feed/v2/promote` -> The source uri to promote from.
+- `targetFeed: targetfeed` -> The target feed to promote to
+- `user: artifactory_user` -> Used for authentication to artifactory
+- `password: artifactory_password` -> Password or accesstoken to artifactory
+- `pathToCertFile: path_to_cert_file` -> Path to pem file for certificate used to communicate with artifactory
+- `copy: boolean` -> True if you want to copy rather than move the image
+- `dryRun: boolean` -> True if you want to do a dry run. This will print the data that would have been sent to artifactory.
+     
+
 ### Swarm Features
 The `swarm` section helps to deploy service stacks to your local swarm. It reuses the [SwarmManagement](https://github.com/DIPSAS/SwarmManagement) deployment tool to deploy and remove services to and from the Swarm.
 - `files` -> The `files` property lists all `swarm-management.yml` deployment files to use for deploying stacks on the Swarm.
@@ -208,6 +225,10 @@ The `swarm` section helps to deploy service stacks to your local swarm. It reuse
 1. Configure setup.py with new version.
 2. Build: python setup.py bdist_wheel
 3. Publish: twine upload dist/*
+
+## Test a new version locally
+1. Build: python setup.py bdist_wheel
+2. Install from local file with force-reinstall and no-cache-dir options to force reinstallation when you have changed the code without changing the version number: `python -m pip install path\to\yourgitrepo\DockerBuildManagement\dist\DockerBuildManagement-0.0.65-py2.py3-none-any.whl --force-reinstall --no-cache-dir`
 
 ## Run Unit Tests
 - python -m unittest

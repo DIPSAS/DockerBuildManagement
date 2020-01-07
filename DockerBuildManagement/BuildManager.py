@@ -1,5 +1,5 @@
 import sys
-from DockerBuildManagement import ChangelogSelections, BuildSelections, PublishSelections, RunSelections, SwarmSelections, TestSelections, BuildTools
+from DockerBuildManagement import ChangelogSelections, BuildSelections, PublishSelections, RunSelections, SwarmSelections, TestSelections, BuildTools, PromoteSelections
 from SwarmManagement import SwarmTools
 
 def GetInfoMsg():
@@ -10,6 +10,8 @@ def GetInfoMsg():
     infoMsg += BuildSelections.GetInfoMsg() + "\r\n\r\n"
     infoMsg += "Publish:\r\n"
     infoMsg += PublishSelections.GetInfoMsg() + "\r\n\r\n"
+    infoMsg += "Promote:\r\n"
+    infoMsg += PromoteSelections.GetInfoMsg() + "\r\n\r\n"
     infoMsg += "Test:\r\n"
     infoMsg += TestSelections.GetInfoMsg() + "\r\n\r\n"
     infoMsg += "Swarm Deployment of Domain Services:\r\n"
@@ -64,6 +66,7 @@ def HandleManagement(arguments):
         TestSelections.HandleTestSelections(actionArgs)
         RunSelections.HandleRunSelections(actionArgs)
         PublishSelections.HandlePublishSelections(actionArgs)
+        PromoteSelections.HandlePromoteSelections(actionArgs)
 
 
 if __name__ == "__main__":
