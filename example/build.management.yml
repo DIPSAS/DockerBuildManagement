@@ -80,6 +80,28 @@ publish:
             files:
                 - docker-compose.pythonSnippet.yml
 
+promote:
+    selections:
+
+        firstSelection:
+            directory: src
+            cmd:
+                - python ./pythonSnippet.py
+            sourceTargetTags:
+                - sourceTag: latest
+                  targetTag: latest
+            promoteSourceUri: https://uri-to-artifactory-feed/v2/promote
+            targetFeed: docker-local
+            user: artifactory_user
+            password: artifactory_password
+            pathToCertFile: pathToCertFile
+            images:
+                - imageName
+                - imageName2
+            copy: true
+            dryRun: true
+
+
 swarm:
     selections:
         firstSelection:
