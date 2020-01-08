@@ -51,9 +51,7 @@ def PromoteSelection(promoteSelection, selectionToPromote):
 
 
 def PromoteImageSelection(promoteSelection, selectionToPromote):
-    print("selection to promote")
-    print(selectionToPromote)
-
+    print("selection to promote: {}".format(selectionToPromote))
 
     for image in promoteSelection[BuildTools.IMAGES_KEY]:
 
@@ -86,12 +84,12 @@ def PromoteImageSelection(promoteSelection, selectionToPromote):
                         raise Exception('No certificate provided for communication with artifactory')
 
                 except HTTPError as http_err:
-                    print(f'HTTP error occurred during promotion: {http_err}')
+                    print('HTTP error occurred during promotion: {}'.format(http_err))
                 except Exception as err:
-                    print(f'An error occurred during promotion: {err}')
+                    print('An error occurred during promotion: {}'.format(err))
 
                 else:
-                     print("Successfully promoted " + sourceTargetTags.get("sourceTag") + " as " + sourceTargetTags.get("targetTag"))
+                    print('Successfully promoted {} as {}'.format(sourceTargetTags.get("sourceTag"), sourceTargetTags.get("targetTag")))
 
 
 def HandlePromoteSelections(arguments):
