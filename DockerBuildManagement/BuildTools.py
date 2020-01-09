@@ -15,15 +15,12 @@ COPY_FROM_CONTAINER_TAG = 'copyFromContainer'
 COPY_CONTAINER_SRC_TAG = 'containerSrc'
 COPY_HOST_DEST_TAG = 'hostDest'
 
-SOURCE_TARGET_TAGS_KEY = 'sourceTargetTags'
-PROMOTE_URI_KEY = 'promoteSourceUri'
+TARGET_TAGS_KEY = 'targetTags'
 TARGET_FEED_KEY = 'targetFeed'
+SOURCE_FEED_KEY = 'sourceFeed'
 USER_KEY = 'user'
 PASSWORD_KEY = 'password'
-IMAGES_KEY = 'images'
-COPY_KEY = 'copy'
 DRY_RUN_KEY = 'dryRun'
-CERT_FILE_PATH_KEY = 'pathToCertFile'
 
 
 DEFAULT_BUILD_MANAGEMENT_YAML_FILES = [
