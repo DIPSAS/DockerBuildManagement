@@ -80,7 +80,6 @@ publish:
 
 promote:
     selections:
-
         firstSelection:
             directory: src
             cmd:
