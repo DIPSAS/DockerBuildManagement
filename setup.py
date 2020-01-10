@@ -134,7 +134,7 @@ setup(
     # For an analysis of "install_requires" vs pip's requirements files see:
     # https://packaging.python.org/en/latest/requirements.html
     install_requires=[
-        'DockerBuildSystem>=1.1.43',
+        'DockerBuildSystem>=1.1.44',
         'SwarmManagement>=1.1.59'],  # Optional
 
     # List additional groups of dependencies here (e.g. development

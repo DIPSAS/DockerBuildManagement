@@ -211,6 +211,7 @@ The `swarm` section helps to deploy service stacks to your local swarm. It reuse
     - https://www.docker.com/get-docker
 - Install Dependencies:
     - pip install -r requirements.txt
+- If you update dependencies or add new ones, they need to be updated both in requirements.txt and in setup.py.
 
 ## Additional Info
 - The pip package may be located at:
