@@ -54,8 +54,6 @@ test:
             cmd:
                 - python ./pythonSnippet.py
             removeContainers: true
-            containerNames:
-                - pythonSnippet
             preserveMergedComposeFile: false
             files:
                 - docker-compose.pythonSnippet.yml

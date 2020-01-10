@@ -2,4 +2,5 @@ version: '3.3'
 
 services:
     pythonSnippet:
-        container_name: newContainerName
+        environment:
+            - SOME_ENV_KEY=value

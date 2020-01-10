@@ -17,6 +17,10 @@ here = path.abspath(path.dirname(__file__))
 with open(path.join(here, 'README.md'), encoding='utf-8') as f:
     long_description = f.read()
 
+with open('requirements.txt') as f:
+    reqLines = f.readlines()
+REQUIREMENTS = [reqLine.replace('\r', '').replace('\n', '') for reqLine in reqLines]
+
 # Arguments marked as "Required" below must be included for upload to PyPI.
 # Fields marked as "Optional" may be commented out.
 
@@ -133,9 +137,7 @@ setup(
     #
     # For an analysis of "install_requires" vs pip's requirements files see:
     # https://packaging.python.org/en/latest/requirements.html
-    install_requires=[
-        'DockerBuildSystem>=1.1.44',
-        'SwarmManagement>=1.1.59'],  # Optional
+    install_requires=REQUIREMENTS,  # Optional
 
     # List additional groups of dependencies here (e.g. development
     # dependencies). Users will be able to install these using the "extras"
