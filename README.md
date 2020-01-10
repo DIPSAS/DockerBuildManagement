@@ -180,19 +180,14 @@ The `publish` section publishes all docker images listed in the `docker-compose.
 - `composeFileWithDigests: <docker-compose.with_digests.yml>` -> Get an updated version of the compose files with the unique digest included in the image names. An unique digest is generated for each published image and should always be used in production.
 
 ### Promote Features
-The `promote`section promotes docker images listed in the `images`property. Only image promotion via artifactory API is supported at this time.
+The `promote`section promotes docker images listed in the `images`property using docker pull - docker tag - docker push.
 Options:
-- `images: <list_of_image_names>` -> List of images to be promoted
-- `sourceTargetTags: <list_of_sourcetarget_tags>` -> List of source and corresponding target tags on the format  
-  `- sourceTag: latest    
-     targetTag: latest` This promotes an image with a given sourceTag from one feed to another and tags it with the targetTag.
-- `promoteSourceUri: https://uri-to-artifactory-feed/v2/promote` -> The source uri to promote from.
-- `targetFeed: targetfeed` -> The target feed to promote to
-- `user: artifactory_user` -> Used for authentication to artifactory
-- `password: artifactory_password` -> Password or accesstoken to artifactory
-- `pathToCertFile: path_to_cert_file` -> Path to pem file for certificate used to communicate with artifactory
-- `copy: boolean` -> True if you want to copy rather than move the image
-- `dryRun: boolean` -> True if you want to do a dry run. This will print the data that would have been sent to artifactory.
+- `targetTags: <list_of_target_tags>` -> the tags you want to use when you push the image to the new feed 
+- `sourceFeed: dockerfeed.dockerserver` -> the feed you want to pull the images from (should match the compose file)
+- `targetFeed: dockerfeed.dockerserver` -> the feed you want to push to
+- `user: artifactory_user` -> used for authenticating to sourceFeed and targetFeed
+- `password: artifactory_password` -> used for authenticating to sourceFeed and targetFeed
+- `dryRun: boolean` -> True if you want to do a dry run. This will print what would have happened.
      
 
 ### Swarm Features
@@ -216,6 +211,7 @@ The `swarm` section helps to deploy service stacks to your local swarm. It reuse
     - https://www.docker.com/get-docker
 - Install Dependencies:
     - pip install -r requirements.txt
+- If you update dependencies or add new ones, they need to be updated both in requirements.txt and in setup.py.
 
 ## Additional Info
 - The pip package may be located at:
@@ -223,8 +219,9 @@ The `swarm` section helps to deploy service stacks to your local swarm. It reuse
 
 ## Publish New Version
 1. Configure setup.py with new version.
-2. Build: python setup.py bdist_wheel
-3. Publish: twine upload dist/*
+2. Install build tools: `pip install twine wheel`
+3. Build: python setup.py bdist_wheel
+4. Publish: twine upload dist/*
 
 ## Test a new version locally
 1. Build: python setup.py bdist_wheel

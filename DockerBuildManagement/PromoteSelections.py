@@ -3,10 +3,9 @@ from SwarmManagement import SwarmTools
 from DockerBuildManagement import BuildTools
 import sys
 import os
-import requests
-from requests.exceptions import HTTPError
 
 PROMOTE_KEY = 'promote'
+CONTAINER_ARTIFACT_KEY = 'containerArtifact'
 
 def GetInfoMsg():
     infoMsg = "Promote selections is configured by adding a 'promote' property to the .yaml file.\r\n"
@@ -42,10 +41,11 @@ def PromoteSelection(promoteSelection, selectionToPromote):
     TerminalTools.LoadDefaultEnvironmentVariablesFile()
 
 
-    if BuildTools.IMAGES_KEY in promoteSelection:
-        PromoteImageSelection(promoteSelection, selectionToPromote)
-    else:
-        raise Exception('"No images provided! Only image promotion through artifactory API is supported at this time"')
+    if BuildTools.FILES_KEY in promoteSelection:
+        if YamlTools.TryGetFromDictionary(promoteSelection, CONTAINER_ARTIFACT_KEY, True):
+            PromoteImageSelection(promoteSelection, selectionToPromote)
+        else:
+            print('Only image promotion is supported')
     
     os.chdir(cwd)
 
@@ -53,43 +53,22 @@ def PromoteSelection(promoteSelection, selectionToPromote):
 def PromoteImageSelection(promoteSelection, selectionToPromote):
     print("selection to promote: {}".format(selectionToPromote))
 
-    for image in promoteSelection[BuildTools.IMAGES_KEY]:
+    composeFiles = promoteSelection[BuildTools.FILES_KEY]
+    promoteComposeFile = BuildTools.GetAvailableComposeFilename('promote', selectionToPromote)
+    DockerComposeTools.MergeComposeFiles(composeFiles, promoteComposeFile)
 
-        for sourceTargetTags in promoteSelection[BuildTools.SOURCE_TARGET_TAGS_KEY]:
-            data = {
-                 "targetRepo": promoteSelection[BuildTools.TARGET_FEED_KEY],
-                 "dockerRepository":  image,
-                 "tag": sourceTargetTags.get("sourceTag"),
-                 "targetTag": sourceTargetTags.get("targetTag"),
-                 "copy": promoteSelection[BuildTools.COPY_KEY]
-             }
+    dryRun = YamlTools.TryGetFromDictionary(promoteSelection, BuildTools.DRY_RUN_KEY, False)
+    
+    DockerComposeTools.PromoteDockerImages(
+        composeFile=promoteComposeFile,
+        targetTags=promoteSelection[BuildTools.TARGET_TAGS_KEY],
+        sourceFeed=promoteSelection[BuildTools.SOURCE_FEED_KEY],
+        targetFeed=promoteSelection[BuildTools.TARGET_FEED_KEY],
+        user=promoteSelection[BuildTools.USER_KEY],
+        password=promoteSelection[BuildTools.PASSWORD_KEY],
+        dryRun=dryRun)
 
-            if BuildTools.DRY_RUN_KEY in promoteSelection and promoteSelection[BuildTools.DRY_RUN_KEY]:
-                print("Would have promoted: ")
-                print(data)
-            elif (BuildTools.DRY_RUN_KEY not in promoteSelection) or \
-                     (not promoteSelection[BuildTools.DRY_RUN_KEY] or promoteSelection[BuildTools.DRY_RUN_KEY] is None):
-
-                try:
-
-                    if(BuildTools.CERT_FILE_PATH_KEY in promoteSelection):
-                        headers={'Content-type':'application/json'}
-                        response = requests.post(promoteSelection[BuildTools.PROMOTE_URI_KEY], 
-                        json=data, 
-                        auth=(promoteSelection[BuildTools.USER_KEY], promoteSelection[BuildTools.PASSWORD_KEY]), 
-                        verify=promoteSelection[BuildTools.CERT_FILE_PATH_KEY])
-
-                        response.raise_for_status()
-                    else:
-                        raise Exception('No certificate provided for communication with artifactory')
-
-                except HTTPError as http_err:
-                    print('HTTP error occurred during promotion: {}'.format(http_err))
-                except Exception as err:
-                    print('An error occurred during promotion: {}'.format(err))
-
-                else:
-                    print('Successfully promoted {} as {}'.format(sourceTargetTags.get("sourceTag"), sourceTargetTags.get("targetTag")))
+    BuildTools.RemoveComposeFileIfNotPreserved(promoteComposeFile, promoteSelection)
 
 
 def HandlePromoteSelections(arguments):

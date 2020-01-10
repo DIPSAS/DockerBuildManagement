@@ -22,4 +22,5 @@ docker-compose.publish.*.yml
 docker-compose.run.*.yml
 docker-compose.test.*.yml
 docker-compose.digest.*.yml
+docker-compose.promote.*.yml
 venv/

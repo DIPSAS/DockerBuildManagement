@@ -1,4 +1,2 @@
-twine
-wheel
 SwarmManagement>=1.1.59
-DockerBuildSystem>=1.1.43
+DockerBuildSystem>=1.1.44

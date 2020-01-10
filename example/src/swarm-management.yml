@@ -1,3 +1,2 @@
 stacks:
     proxy: docker-compose.proxy.yml
-    proxy_2: docker-compose.proxy.yml
