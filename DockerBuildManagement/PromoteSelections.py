@@ -3,8 +3,6 @@ from SwarmManagement import SwarmTools
 from DockerBuildManagement import BuildTools
 import sys
 import os
-import requests
-from requests.exceptions import HTTPError
 
 PROMOTE_KEY = 'promote'
 CONTAINER_ARTIFACT_KEY = 'containerArtifact'

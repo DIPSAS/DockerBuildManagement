@@ -219,8 +219,9 @@ The `swarm` section helps to deploy service stacks to your local swarm. It reuse
 
 ## Publish New Version
 1. Configure setup.py with new version.
-2. Build: python setup.py bdist_wheel
-3. Publish: twine upload dist/*
+2. Install build tools: `pip install twine wheel`
+3. Build: python setup.py bdist_wheel
+4. Publish: twine upload dist/*
 
 ## Test a new version locally
 1. Build: python setup.py bdist_wheel
