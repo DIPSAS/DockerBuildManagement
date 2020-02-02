@@ -97,8 +97,6 @@ test:
             cmd:
                 - python ./pythonSnippet.py
             removeContainers: true
-            containerNames:
-                - pythonSnippet
             preserveMergedComposeFile: false
             files:
                 - docker-compose.pythonSnippet.yml
@@ -120,6 +118,24 @@ publish:
         secondSelection:
             directory: src
             containerArtifact: false
+            files:
+                - docker-compose.pythonSnippet.yml
+
+promote:
+    selections:
+        firstSelection:
+            directory: src
+            cmd:
+                - python ./pythonSnippet.py
+            targetTags:
+                - latest
+                - qaapproved
+            sourceFeed: <docker.dockerserver>
+            targetFeed: <docker2.dockerserver>
+            user: <user_for_target_and_source_feed>
+            password: <password_for_target_and_source_feed>
+            logout: false
+            dryRun: false
             files:
                 - docker-compose.pythonSnippet.yml
 
@@ -180,14 +196,14 @@ The `publish` section publishes all docker images listed in the `docker-compose.
 - `composeFileWithDigests: <docker-compose.with_digests.yml>` -> Get an updated version of the compose files with the unique digest included in the image names. An unique digest is generated for each published image and should always be used in production.
 
 ### Promote Features
-The `promote`section promotes docker images listed in the `images`property using docker pull - docker tag - docker push.
-Options:
-- `targetTags: <list_of_target_tags>` -> the tags you want to use when you push the image to the new feed 
-- `sourceFeed: dockerfeed.dockerserver` -> the feed you want to pull the images from (should match the compose file)
-- `targetFeed: dockerfeed.dockerserver` -> the feed you want to push to
-- `user: artifactory_user` -> used for authenticating to sourceFeed and targetFeed
-- `password: artifactory_password` -> used for authenticating to sourceFeed and targetFeed
-- `dryRun: boolean` -> True if you want to do a dry run. This will print what would have happened.
+The `promote` section promotes docker images listed in the `images` property using docker pull, docker tag and docker push.
+- `targetTags: <list_of_target_tags>` -> the tags you want to use when you push the image to the new feed. Mandatory to set.
+- `sourceFeed: <dockerfeed.dockerserver>` -> the feed you want to pull the images from (should match the compose file). Not mandatory to set.
+- `targetFeed: <dockerfeed.dockerserver>` -> the feed you want to push to. Not mandatory to set.
+- `user: <dockerfeed_user>` -> used for authenticating to sourceFeed and targetFeed. Not mandatory to set.
+- `password: <dockerfeed_password>` -> used for authenticating to sourceFeed and targetFeed. Not mandatory to set.
+- `logout: true/false` -> logout from source and target feed after promotion. Default is `false`.
+- `dryRun: true/false` -> True if you want to do a dry run. This will print what would have happened. Default is `false`.
      
 
 ### Swarm Features

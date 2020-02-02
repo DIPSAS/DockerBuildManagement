@@ -57,15 +57,21 @@ def PromoteImageSelection(promoteSelection, selectionToPromote):
     promoteComposeFile = BuildTools.GetAvailableComposeFilename('promote', selectionToPromote)
     DockerComposeTools.MergeComposeFiles(composeFiles, promoteComposeFile)
 
+    sourceFeed = YamlTools.TryGetFromDictionary(promoteSelection, BuildTools.SOURCE_FEED_KEY, None)
+    targetFeed = YamlTools.TryGetFromDictionary(promoteSelection, BuildTools.TARGET_FEED_KEY, None)
+    user = YamlTools.TryGetFromDictionary(promoteSelection, BuildTools.USER_KEY, None)
+    password = YamlTools.TryGetFromDictionary(promoteSelection, BuildTools.PASSWORD_KEY, None)
+    logout = YamlTools.TryGetFromDictionary(promoteSelection, BuildTools.LOGOUT_KEY, False)
     dryRun = YamlTools.TryGetFromDictionary(promoteSelection, BuildTools.DRY_RUN_KEY, False)
     
     DockerComposeTools.PromoteDockerImages(
         composeFile=promoteComposeFile,
         targetTags=promoteSelection[BuildTools.TARGET_TAGS_KEY],
-        sourceFeed=promoteSelection[BuildTools.SOURCE_FEED_KEY],
-        targetFeed=promoteSelection[BuildTools.TARGET_FEED_KEY],
-        user=promoteSelection[BuildTools.USER_KEY],
-        password=promoteSelection[BuildTools.PASSWORD_KEY],
+        sourceFeed=sourceFeed,
+        targetFeed=targetFeed,
+        user=user,
+        password=password,
+        logoutFromFeeds=logout,
         dryRun=dryRun)
 
     BuildTools.RemoveComposeFileIfNotPreserved(promoteComposeFile, promoteSelection)

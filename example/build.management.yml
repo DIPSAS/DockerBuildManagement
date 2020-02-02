@@ -87,10 +87,11 @@ promote:
             targetTags:
                 - latest
                 - qaapproved
-            targetFeed: docker.dockerserver
             sourceFeed: docker2.dockerserver
-            user: user_for_targetfeed
-            password: password_for_targetfeed
+            targetFeed: docker.dockerserver
+            user: user_for_target_and_source_feed
+            password: password_for_target_and_source_feed
+            logout: false
             dryRun: true
             files:
                 - docker-compose.pythonSnippet.yml

@@ -20,6 +20,7 @@ TARGET_FEED_KEY = 'targetFeed'
 SOURCE_FEED_KEY = 'sourceFeed'
 USER_KEY = 'user'
 PASSWORD_KEY = 'password'
+LOGOUT_KEY = 'logout'
 DRY_RUN_KEY = 'dryRun'
 
 
