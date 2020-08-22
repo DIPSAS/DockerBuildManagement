@@ -45,7 +45,7 @@ def RunSelection(runSelection, selectionToRun):
     if BuildTools.FILES_KEY in runSelection:
         runComposeFile = BuildTools.GetAvailableComposeFilename('run', selectionToRun)
         composeFiles = runSelection[BuildTools.FILES_KEY]
-        if VERIFY_CONTAINER_EXIT_CODE in runSelection:
+        if YamlTools.TryGetFromDictionary(runSelection, VERIFY_CONTAINER_EXIT_CODE, False):
             containerNames = BuildTools.MergeAndPopulateWithContainerNames(composeFiles, runComposeFile)
             if BuildTools.CONTAINER_NAMES_KEY in runSelection:
                 containerNames = runSelection[BuildTools.CONTAINER_NAMES_KEY]
