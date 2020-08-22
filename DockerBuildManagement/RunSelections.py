@@ -1,4 +1,4 @@
-from DockerBuildSystem import DockerComposeTools, YamlTools, TerminalTools
+from DockerBuildSystem import DockerComposeTools, DockerImageTools, YamlTools, TerminalTools
 from SwarmManagement import SwarmTools
 from DockerBuildManagement import BuildTools
 import sys
@@ -7,6 +7,7 @@ import os
 RUN_KEY = 'run'
 ABORT_ON_CONTAINER_EXIT_KEY = 'abortOnContainerExit'
 DETACHED_KEY = 'detached'
+VERIFY_CONTAINER_EXIT_CODE = 'verifyContainerExitCode'
 
 def GetInfoMsg():
     infoMsg = "Run selections is configured by adding a 'run' property to the .yaml file.\r\n"
@@ -44,19 +45,24 @@ def RunSelection(runSelection, selectionToRun):
     if BuildTools.FILES_KEY in runSelection:
         runComposeFile = BuildTools.GetAvailableComposeFilename('run', selectionToRun)
         composeFiles = runSelection[BuildTools.FILES_KEY]
-        DockerComposeTools.MergeComposeFiles(composeFiles, runComposeFile)
+        if VERIFY_CONTAINER_EXIT_CODE in runSelection:
+            containerNames = BuildTools.MergeAndPopulateWithContainerNames(composeFiles, runComposeFile)
+            if BuildTools.CONTAINER_NAMES_KEY in runSelection:
+                containerNames = runSelection[BuildTools.CONTAINER_NAMES_KEY]
+        else:
+            containerNames = []
+            DockerComposeTools.MergeComposeFiles(composeFiles, runComposeFile)
 
         try:
             DockerComposeTools.DockerComposeUp(
                 [runComposeFile],
                 YamlTools.TryGetFromDictionary(runSelection, ABORT_ON_CONTAINER_EXIT_KEY, True),
                 YamlTools.TryGetFromDictionary(runSelection, DETACHED_KEY, False))
-        except:
+        finally:
             BuildTools.RemoveComposeFileIfNotPreserved(runComposeFile, runSelection)
-            raise
 
+        DockerImageTools.VerifyContainerExitCode(containerNames, assertExitCodes=True)
         BuildTools.HandleCopyFromContainer(runSelection)
-        BuildTools.RemoveComposeFileIfNotPreserved(runComposeFile, runSelection)
     
     os.chdir(cwd)
 

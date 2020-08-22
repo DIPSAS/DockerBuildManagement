@@ -10,6 +10,8 @@ ADDITIONAL_TAG_KEY = 'additionalTag'
 ADDITIONAL_TAGS_KEY = 'additionalTags'
 COMPOSE_FILE_WITH_DIGESTS_KEY = 'composeFileWithDigests'
 PRESERVE_MERGED_COMPOSE_FILE = 'preserveMergedComposeFile'
+CONTAINER_NAMES_KEY = 'containerNames'
+REMOVE_CONTAINERS_KEY = 'removeContainers'
 
 COPY_FROM_CONTAINER_TAG = 'copyFromContainer'
 COPY_CONTAINER_SRC_TAG = 'containerSrc'
@@ -85,3 +87,12 @@ def RemoveComposeFileIfNotPreserved(composeFile, selection):
 def GetAvailableComposeFilename(selectionTag, defaultTag):
     composeFile = 'docker-compose.{0}.{1}.yml'.format(selectionTag, defaultTag)
     return composeFile
+
+
+def MergeAndPopulateWithContainerNames(composeFiles, testComposeFile):
+    DockerComposeTools.MergeComposeFiles(composeFiles, testComposeFile)
+    yamlData = YamlTools.GetYamlData([testComposeFile])
+    DockerComposeTools.AddContainerNames(yamlData)
+    YamlTools.DumpYamlDataToFile(yamlData, testComposeFile)
+    containerNames = DockerComposeTools.GetContainerNames(yamlData)
+    return containerNames

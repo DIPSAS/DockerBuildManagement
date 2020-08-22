@@ -5,8 +5,6 @@ import sys
 import os
 
 TEST_KEY = 'test'
-CONTAINER_NAMES_KEY = 'containerNames'
-REMOVE_CONTAINERS_KEY = 'removeContainers'
 
 
 def GetInfoMsg():
@@ -45,9 +43,9 @@ def TestSelection(testSelection, selectionToTest):
     if BuildTools.FILES_KEY in testSelection:
         testComposeFile = BuildTools.GetAvailableComposeFilename('test', selectionToTest)
         composeFiles = testSelection[BuildTools.FILES_KEY]
-        containerNames = MergeAndPopulateWithContainerNames(composeFiles, testComposeFile)
-        if CONTAINER_NAMES_KEY in testSelection:
-            containerNames = testSelection[CONTAINER_NAMES_KEY]
+        containerNames = BuildTools.MergeAndPopulateWithContainerNames(composeFiles, testComposeFile)
+        if BuildTools.CONTAINER_NAMES_KEY in testSelection:
+            containerNames = testSelection[BuildTools.CONTAINER_NAMES_KEY]
 
         try:
             DockerComposeTools.ExecuteComposeTests([testComposeFile], containerNames, False)
@@ -56,21 +54,12 @@ def TestSelection(testSelection, selectionToTest):
             raise
 
         BuildTools.HandleCopyFromContainer(testSelection)
-        if YamlTools.TryGetFromDictionary(testSelection, REMOVE_CONTAINERS_KEY, False):
+        if YamlTools.TryGetFromDictionary(testSelection, BuildTools.REMOVE_CONTAINERS_KEY, False):
             DockerComposeTools.DockerComposeRemove([testComposeFile])
 
         BuildTools.RemoveComposeFileIfNotPreserved(testComposeFile, testSelection)
 
     os.chdir(cwd)
-
-
-def MergeAndPopulateWithContainerNames(composeFiles, testComposeFile):
-    DockerComposeTools.MergeComposeFiles(composeFiles, testComposeFile)
-    yamlData = YamlTools.GetYamlData([testComposeFile])
-    DockerComposeTools.AddContainerNames(yamlData)
-    YamlTools.DumpYamlDataToFile(yamlData, testComposeFile)
-    containerNames = DockerComposeTools.GetContainerNames(yamlData)
-    return containerNames
 
 
 def HandleTestSelections(arguments):
