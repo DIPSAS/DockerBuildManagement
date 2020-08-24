@@ -58,11 +58,17 @@ def RunSelection(runSelection, selectionToRun):
                 [runComposeFile],
                 YamlTools.TryGetFromDictionary(runSelection, ABORT_ON_CONTAINER_EXIT_KEY, True),
                 YamlTools.TryGetFromDictionary(runSelection, DETACHED_KEY, False))
-        finally:
+        except:
             BuildTools.RemoveComposeFileIfNotPreserved(runComposeFile, runSelection)
+            raise
 
         DockerImageTools.VerifyContainerExitCode(containerNames, assertExitCodes=True)
         BuildTools.HandleCopyFromContainer(runSelection)
+
+        if YamlTools.TryGetFromDictionary(runSelection, BuildTools.REMOVE_CONTAINERS_KEY, False):
+            DockerComposeTools.DockerComposeRemove([runComposeFile])
+
+        BuildTools.RemoveComposeFileIfNotPreserved(runComposeFile, runSelection)
     
     os.chdir(cwd)
 

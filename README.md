@@ -65,6 +65,7 @@ run:
                 - python ./pythonSnippet.py
             abortOnContainerExit: true
             verifyContainerExitCode: true
+            removeContainers: true
             detached: false
             preserveMergedComposeFile: false
             files:
