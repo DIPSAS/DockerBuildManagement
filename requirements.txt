@@ -1,2 +1,2 @@
-SwarmManagement>=1.1.71
-DockerBuildSystem>=1.1.50
+SwarmManagement>=1.1.72
+DockerBuildSystem>=1.1.51
