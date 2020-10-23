@@ -48,12 +48,17 @@ def TestSelection(testSelection, selectionToTest):
             containerNames = testSelection[BuildTools.CONTAINER_NAMES_KEY]
 
         try:
-            DockerComposeTools.ExecuteComposeTests([testComposeFile], containerNames, False)
+            DockerComposeTools.ExecuteComposeTests([testComposeFile],
+                                                   testContainerNames=containerNames,
+                                                   removeTestContainers=False,
+                                                   buildCompose=True,
+                                                   downCompose=False)
         except:
             BuildTools.RemoveComposeFileIfNotPreserved(testComposeFile, testSelection)
             raise
 
         BuildTools.HandleCopyFromContainer(testSelection)
+        DockerComposeTools.DockerComposeDown([testComposeFile])
         if YamlTools.TryGetFromDictionary(testSelection, BuildTools.REMOVE_CONTAINERS_KEY, False):
             DockerComposeTools.DockerComposeRemove([testComposeFile])
 
