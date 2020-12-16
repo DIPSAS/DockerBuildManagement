@@ -1,4 +1,5 @@
 import sys
+import os
 from DockerBuildManagement import ChangelogSelections, BuildSelections, PublishSelections, RunSelections, SwarmSelections, TestSelections, BuildTools, PromoteSelections
 from SwarmManagement import SwarmTools
 
@@ -41,6 +42,11 @@ def GetPositionalActionArguments(arguments, index):
         actionArgs += selections
 
     return actionArgs, newIndex
+
+
+def SetDefaultCommonEnvVariables():
+    if 'PWD' not in os.environ:
+        os.environ['PWD'] = os.getcwd()
     
     
 def HandleManagement(arguments):
@@ -54,6 +60,7 @@ def HandleManagement(arguments):
     
     SwarmTools.LoadEnvironmentVariables(
         arguments, BuildTools.DEFAULT_BUILD_MANAGEMENT_YAML_FILES)
+    SetDefaultCommonEnvVariables()
     SwarmTools.HandleDumpYamlData(
         arguments, BuildTools.DEFAULT_BUILD_MANAGEMENT_YAML_FILES)
     ChangelogSelections.HandleChangelogSelections(arguments)
