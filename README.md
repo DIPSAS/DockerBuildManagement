@@ -84,8 +84,8 @@ build:
                 - python ./pythonSnippet.py
             additionalTag: latest
             additionalTags:
-                - beta
-                - zeta
+                - ${VERSION:-1.0.0}.beta
+                - ${VERSION:-1.0.0}.zeta
             saveImages: ../output
             composeFileWithDigests: docker-compose.digest.pythonSnippet.yml
             preserveMergedComposeFile: false
@@ -111,8 +111,8 @@ publish:
                 - python ./pythonSnippet.py
             additionalTag: latest
             additionalTags:
-                - beta
-                - zeta
+                - ${VERSION:-1.0.0}.beta
+                - ${VERSION:-1.0.0}.zeta
             composeFileWithDigests: docker-compose.digest.pythonSnippet.yml
             preserveMergedComposeFile: false
             files:
@@ -218,11 +218,13 @@ The `swarm` section helps to deploy service stacks to your local swarm. It reuse
     - `file` -> Path to the changelog file. The changelog file must be of a format similar to either of the changelog formats:
       - [example/src/CHANGELOG.md](example/src/CHANGELOG.md)
       - [example/src/CHANGELOG.v2.md](example/src/CHANGELOG.v2.md).
-      - The `cmd` property may be used to trigger a script exposing the `VERSION` environment variable in any preferred way if the changelog standard isn't suitable.
     - `envKey` -> On which environment variable to expose the version value. Default is `VERSION`.
     - `envMajorVersionKey` -> Optional environment variable to expose the version major value.
     - `envMinorVersionKey` -> Optional environment variable to expose the version minor value.
-- `env_files` -> List of `.env` files listing environment variables to expose. By convention, a present `.env` file will automatically be used to expose environment variables. Additionally, any yaml file may contain the `${*}` sequence anywhere in the file. The matching environment variable (`ENV_KEY` of `${ENV_KEY}`) will replace this sequence with the value of the environment variable.
+- `env_files` -> List of `.env` files listing default environment variables to expose. By convention, a present `.env` file will automatically be used to expose environment variables. 
+- `Environment variable replacement` -> Any area in the yaml template may use environment variable replacemenet with the `${ENV_KEY:-default_value}` syntax. 
+  - `Default environment variables`:
+    - `PWD` -> Exposes the present working directory.
 
 ## Prerequisites
 - Docker:

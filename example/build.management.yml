@@ -41,8 +41,8 @@ build:
                 - python ./pythonSnippet.py
             additionalTag: latest
             additionalTags:
-                - beta
-                - zeta
+                - ${VERSION:-1.0.0}.beta
+                - ${VERSION:-1.0.0}.zeta
             saveImages: ../output
             composeFileWithDigests: docker-compose.digest.pythonSnippet.yml
             preserveMergedComposeFile: false
@@ -68,8 +68,8 @@ publish:
                 - python ./pythonSnippet.py
             additionalTag: latest
             additionalTags:
-                - beta
-                - zeta
+                - ${VERSION:-1.0.0}.beta
+                - ${VERSION:-1.0.0}.zeta
             composeFileWithDigests: docker-compose.digest.pythonSnippet.yml
             preserveMergedComposeFile: false
             files:
