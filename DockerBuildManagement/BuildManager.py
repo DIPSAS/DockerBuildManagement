@@ -46,7 +46,7 @@ def GetPositionalActionArguments(arguments, index):
 
 def SetDefaultCommonEnvVariables():
     if 'PWD' not in os.environ:
-        os.environ['PWD'] = os.getcwd()
+        os.environ['PWD'] = os.getcwd().replace('\\', '/')
     
     
 def HandleManagement(arguments):
