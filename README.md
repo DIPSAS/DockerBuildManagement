@@ -57,6 +57,8 @@ run:
     selections:
         firstSelection:
             directory: src
+            environmentVariables:
+                ENVIRONMENT_VARIABLE_KEY: environment_variable
             copyFromContainer:
                 pythonSnippet:
                     containerSrc: /src/
@@ -80,6 +82,8 @@ build:
     selections:
         firstSelection:
             directory: src
+            environmentVariables:
+                ENVIRONMENT_VARIABLE_KEY: environment_variable
             cmd:
                 - python ./pythonSnippet.py
             additionalTag: latest
@@ -96,6 +100,8 @@ test:
     selections:
         firstSelection:
             directory: src
+            environmentVariables:
+                ENVIRONMENT_VARIABLE_KEY: environment_variable
             cmd:
                 - python ./pythonSnippet.py
             removeContainers: true
@@ -107,6 +113,8 @@ publish:
     selections:
         firstSelection:
             directory: src
+            environmentVariables:
+                ENVIRONMENT_VARIABLE_KEY: environment_variable
             cmd:
                 - python ./pythonSnippet.py
             additionalTag: latest
@@ -127,6 +135,8 @@ promote:
     selections:
         firstSelection:
             directory: src
+            environmentVariables:
+                ENVIRONMENT_VARIABLE_KEY: environment_variable
             cmd:
                 - python ./pythonSnippet.py
             targetTags:
@@ -145,6 +155,8 @@ swarm:
     selections:
         firstSelection:
             directory: src
+            environmentVariables:
+                ENVIRONMENT_VARIABLE_KEY: environment_variable
             cmd:
                 - python ./pythonSnippet.py
             properties:
@@ -163,6 +175,7 @@ Or take a look at another project which takes use of this library:
 
 ### General features
 - `directory` -> Each section has a `directory` property defining in which relative directory the section will be executed. Note that all relative position to files and command lines will be executed relative to this directory during execution of that section.
+- `environmentVariables` -> Each section has an `environmentVariables` property with a subsection of key value pairs of environment variables to set.
 - `files` -> Each section has a `files` property listing all `docker-compose.yml` files to use when either building, testing or running the services listed in `docker-compose.yml`.
 - `preserveMergedComposeFile` -> Each section has a `preserveMergedComposeFile` property which is set to `true` or `false`. When set to `true` it will preserve a merged compose file version of the listed compose files. It is by default set to `false`.
 - `cmd` -> Executes a list of command lines before initiating the main job of the section.

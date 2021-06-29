@@ -38,6 +38,7 @@ def BuildSelections(selectionsToBuild, buildSelections):
 
 def BuildSelection(buildSelection, selectionToBuild):
     cwd = BuildTools.TryChangeToDirectoryAndGetCwd(buildSelection)
+    oldEnvironmentVariable = BuildTools.AddEnvironmentVariablesFromSelection(buildSelection)
     BuildTools.HandleTerminalCommandsSelection(buildSelection)
     TerminalTools.LoadDefaultEnvironmentVariablesFile()
 
@@ -66,7 +67,8 @@ def BuildSelection(buildSelection, selectionToBuild):
             BuildTools.GenerateComposeFileWithDigests(composeFiles, composeFileWithDigests)
 
         BuildTools.RemoveComposeFileIfNotPreserved(buildComposeFile, buildSelection)
-            
+
+    BuildTools.RemoveEnvironmentVariables(oldEnvironmentVariable)
     os.chdir(cwd)
 
 

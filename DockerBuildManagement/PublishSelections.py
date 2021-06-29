@@ -37,6 +37,7 @@ def PublishSelections(selectionsToPublish, publishSelections):
 
 def PublishSelection(publishSelection, selectionToPublish):
     cwd = BuildTools.TryChangeToDirectoryAndGetCwd(publishSelection)
+    oldEnvironmentVariable = BuildTools.AddEnvironmentVariablesFromSelection(publishSelection)
     BuildTools.HandleTerminalCommandsSelection(publishSelection)
     TerminalTools.LoadDefaultEnvironmentVariablesFile()
 
@@ -47,7 +48,8 @@ def PublishSelection(publishSelection, selectionToPublish):
             PublishArtifactSelection(publishSelection)
 
         BuildTools.HandleCopyFromContainer(publishSelection)
-    
+
+    BuildTools.RemoveEnvironmentVariables(oldEnvironmentVariable)
     os.chdir(cwd)
 
 

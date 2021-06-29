@@ -5,6 +5,7 @@ import os
 COMMAND_KEY = 'cmd'
 SELECTIONS_KEY = 'selections'
 FILES_KEY = 'files'
+ENVIRONMENT_VARIABLES_KEY = 'environmentVariables'
 DIRECTORY_KEY = 'directory'
 ADDITIONAL_TAG_KEY = 'additionalTag'
 ADDITIONAL_TAGS_KEY = 'additionalTags'
@@ -47,6 +48,27 @@ def HandleTerminalCommandsSelection(selection):
     if COMMAND_KEY in selection:
         terminalCommands = selection[COMMAND_KEY]
         TerminalTools.ExecuteTerminalCommands(terminalCommands, True)
+
+
+def AddEnvironmentVariablesFromSelection(selection):
+    oldEnvironmentVariable = {}
+    if ENVIRONMENT_VARIABLES_KEY in selection:
+        for key in selection[ENVIRONMENT_VARIABLES_KEY]:
+            oldEnvironmentVariable[key] = None
+            if key in os.environ:
+                oldEnvironmentVariable[key] = os.environ[key]
+            os.environ[key] = selection[ENVIRONMENT_VARIABLES_KEY][key]
+    return oldEnvironmentVariable
+
+
+def RemoveEnvironmentVariables(oldEnvironmentVariable):
+    for key in oldEnvironmentVariable:
+        oldVariable = oldEnvironmentVariable[key]
+        if key in os.environ:
+            if oldVariable is None:
+                os.environ.pop(key)
+            else:
+                os.environ[key] = oldVariable
 
 
 def TryChangeToDirectoryAndGetCwd(selection):

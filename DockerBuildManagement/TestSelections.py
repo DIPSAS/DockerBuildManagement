@@ -37,6 +37,7 @@ def TestSelections(selectionsToTest, testSelections):
 
 def TestSelection(testSelection, selectionToTest):
     cwd = BuildTools.TryChangeToDirectoryAndGetCwd(testSelection)
+    oldEnvironmentVariable = BuildTools.AddEnvironmentVariablesFromSelection(testSelection)
     BuildTools.HandleTerminalCommandsSelection(testSelection)
     TerminalTools.LoadDefaultEnvironmentVariablesFile()
 
@@ -64,6 +65,7 @@ def TestSelection(testSelection, selectionToTest):
 
         BuildTools.RemoveComposeFileIfNotPreserved(testComposeFile, testSelection)
 
+    BuildTools.RemoveEnvironmentVariables(oldEnvironmentVariable)
     os.chdir(cwd)
 
 

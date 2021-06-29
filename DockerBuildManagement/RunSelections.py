@@ -39,6 +39,7 @@ def RunSelections(selectionsToRun, runSelections):
 
 def RunSelection(runSelection, selectionToRun):
     cwd = BuildTools.TryChangeToDirectoryAndGetCwd(runSelection)
+    oldEnvironmentVariable = BuildTools.AddEnvironmentVariablesFromSelection(runSelection)
     BuildTools.HandleTerminalCommandsSelection(runSelection)
     TerminalTools.LoadDefaultEnvironmentVariablesFile()
 
@@ -69,7 +70,8 @@ def RunSelection(runSelection, selectionToRun):
             DockerComposeTools.DockerComposeRemove([runComposeFile])
 
         BuildTools.RemoveComposeFileIfNotPreserved(runComposeFile, runSelection)
-    
+
+    BuildTools.RemoveEnvironmentVariables(oldEnvironmentVariable)
     os.chdir(cwd)
 
 

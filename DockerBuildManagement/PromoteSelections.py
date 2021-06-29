@@ -37,6 +37,7 @@ def PromoteSelections(selectionsToPromote, promoteSelections):
 
 def PromoteSelection(promoteSelection, selectionToPromote):
     cwd = BuildTools.TryChangeToDirectoryAndGetCwd(promoteSelection)
+    oldEnvironmentVariable = BuildTools.AddEnvironmentVariablesFromSelection(promoteSelection)
     BuildTools.HandleTerminalCommandsSelection(promoteSelection)
     TerminalTools.LoadDefaultEnvironmentVariablesFile()
 
@@ -46,7 +47,8 @@ def PromoteSelection(promoteSelection, selectionToPromote):
             PromoteImageSelection(promoteSelection, selectionToPromote)
         else:
             print('Only image promotion is supported')
-    
+
+    BuildTools.RemoveEnvironmentVariables(oldEnvironmentVariable)
     os.chdir(cwd)
 
 
