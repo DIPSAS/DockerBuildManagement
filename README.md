@@ -4,6 +4,10 @@
 [![Build Status](https://travis-ci.com/DIPSAS/DockerBuildManagement.svg?branch=master)](https://travis-ci.com/DIPSAS/DockerBuildManagement)
 [![MIT license](http://img.shields.io/badge/license-MIT-brightgreen.svg)](http://opensource.org/licenses/MIT)
 
+# !DEPRECATED!
+Please follow new source: 
+- https://github.com/hansehe/DockerBuildManagement
+
 Build Management is a python application, installed with pip.
 The application makes it easy to manage a build system based on Docker by configuring a single yaml file describing how to build, test, run or publish a containerized solution.
 
